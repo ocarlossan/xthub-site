@@ -432,12 +432,22 @@
     var c=document.getElementById('prodCarousel');
     var prev=document.getElementById('prodPrev'), next=document.getElementById('prodNext');
     if(!c||!prev||!next) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function step(){ var card=c.querySelector('.product'); return card ? card.getBoundingClientRect().width + 20 : 400; }
-    function update(){ var max=c.scrollWidth - c.clientWidth - 2; prev.disabled = c.scrollLeft <= 2; next.disabled = c.scrollLeft >= max; }
-    prev.addEventListener('click', function(){ c.scrollBy({left:-step()}); });
-    next.addEventListener('click', function(){ c.scrollBy({left:step()}); });
-    c.addEventListener('scroll', update, {passive:true});
-    window.addEventListener('resize', update);
-    update();
+    function maxScroll(){ return c.scrollWidth - c.clientWidth - 2; }
+    function goNext(){ if(c.scrollLeft >= maxScroll()) c.scrollTo({left:0}); else c.scrollBy({left:step()}); }
+    function goPrev(){ if(c.scrollLeft <= 2) c.scrollTo({left:maxScroll()}); else c.scrollBy({left:-step()}); }
+    next.addEventListener('click', goNext);
+    prev.addEventListener('click', goPrev);
+    // autoplay em loop a cada 5s (pausa no hover / interação, respeita reduced-motion)
+    var paused=false, resumeT=null;
+    function pauseFor(ms){ paused=true; clearTimeout(resumeT); resumeT=setTimeout(function(){ paused=false; }, ms); }
+    if(!reduce){
+      setInterval(function(){ if(!paused && document.visibilityState==='visible') goNext(); }, 5000);
+      c.addEventListener('mouseenter', function(){ paused=true; clearTimeout(resumeT); });
+      c.addEventListener('mouseleave', function(){ paused=false; });
+      ['pointerdown','wheel','touchstart'].forEach(function(ev){ c.addEventListener(ev, function(){ pauseFor(9000); }, {passive:true}); });
+      [prev,next].forEach(function(b){ b.addEventListener('click', function(){ pauseFor(9000); }); });
+    }
   })();
 </script>
