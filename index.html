@@ -110,7 +110,14 @@
   .area p{margin:0; color:var(--muted); font-size:14.5px;}
 
   /* ---------- produtos ---------- */
-  .products{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:52px;}
+  .prod-head{display:flex; justify-content:space-between; align-items:flex-end; gap:24px;}
+  .prod-arrows{display:flex; gap:10px; flex:none;}
+  .parrow{width:44px; height:44px; border-radius:50%; border:1px solid var(--line-2); background:transparent; color:var(--text); font-size:20px; line-height:1; cursor:pointer; display:grid; place-items:center; transition:border-color .18s, background .18s, opacity .18s;}
+  .parrow:hover{border-color:var(--accent); background:rgba(255,255,255,.05);}
+  .parrow:disabled{opacity:.28; cursor:default;}
+  .products{display:flex; gap:20px; margin-top:34px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 2px 12px; scrollbar-width:none; -ms-overflow-style:none; scroll-behavior:smooth;}
+  .products::-webkit-scrollbar{display:none;}
+  .product{scroll-snap-align:start; flex:0 0 440px;}
   .product{
     position:relative; overflow:hidden; border:1px solid var(--line-2); border-radius:22px;
     padding:34px 32px; background:var(--ink-2); transition:border-color .2s, transform .2s;
@@ -168,7 +175,9 @@
   @media (max-width:860px){
     .nav-links a:not(.btn){display:none;}
     .areas{grid-template-columns:1fr;}
-    .products{grid-template-columns:1fr;}
+    .product{flex-basis:86vw; max-width:440px;}
+    .prod-arrows{display:none;}
+    .prod-head{flex-direction:column; align-items:flex-start; gap:4px;}
     .about-grid{grid-template-columns:1fr; gap:34px;}
     .foot-grid{grid-template-columns:1fr; gap:32px;}
     .band{padding:74px 0;}
@@ -247,12 +256,18 @@
 
 <section class="band" id="produtos">
   <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Produtos</span>
-      <h2>O que já está no ar.</h2>
-      <p>Produtos desenvolvidos e operados pela XTHUB.</p>
+    <div class="prod-head">
+      <div class="sec-head">
+        <span class="eyebrow">Produtos</span>
+        <h2>Nossos produtos.</h2>
+        <p>Produtos desenvolvidos e operados pela XTHUB.</p>
+      </div>
+      <div class="prod-arrows">
+        <button class="parrow" id="prodPrev" aria-label="Produto anterior">‹</button>
+        <button class="parrow" id="prodNext" aria-label="Próximo produto">›</button>
+      </div>
     </div>
-    <div class="products">
+    <div class="products" id="prodCarousel">
       <a class="product bripi" href="https://bripi.com.br/" target="_blank" rel="noopener">
         <div class="p-top">
           <span class="p-mark" style="background:linear-gradient(145deg,#3DC79E,#2C9C83)">
@@ -276,6 +291,27 @@
         <p>Inteligência artificial para análise de dados esportivos e probabilidades. Modelos treinados em milhões de jogos, transformando dados em leitura clara.</p>
         <div class="p-foot"><span class="p-link">Acessar o site <span aria-hidden="true">→</span></span></div>
       </a>
+      <div class="product aurax">
+        <div class="p-top">
+          <span class="p-mark" style="background:transparent">
+            <svg width="44" height="44" viewBox="0 0 256 256" fill="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="auraxTile" x1="0" y1="0" x2="256" y2="256" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#141A26"/><stop offset="1" stop-color="#0A0D14"/></linearGradient>
+                <linearGradient id="auraxGold" x1="70" y1="52" x2="188" y2="204" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FCE7A6"/><stop offset="0.45" stop-color="#F5C242"/><stop offset="1" stop-color="#E0940A"/></linearGradient>
+              </defs>
+              <rect width="256" height="256" rx="58" fill="url(#auraxTile)"/>
+              <rect x="1.5" y="1.5" width="253" height="253" rx="56.5" fill="none" stroke="#F5C242" stroke-opacity="0.16" stroke-width="3"/>
+              <path d="M128 54 L188 200" stroke="url(#auraxGold)" stroke-width="24" stroke-linecap="round"/>
+              <path d="M128 54 L68 200" stroke="url(#auraxGold)" stroke-width="24" stroke-linecap="round"/>
+              <path d="M96 150 L160 150" stroke="url(#auraxGold)" stroke-width="20" stroke-linecap="round"/>
+              <circle cx="128" cy="54" r="9" fill="#FFF4D6"/>
+            </svg>
+          </span>
+          <span class="p-name">Aurax</span>
+        </div>
+        <p>Inteligência artificial para o mercado financeiro. Sinais de trading em forex e ouro (EUR/USD e XAU/USD) com gestão de risco, validados por backtest.</p>
+        <div class="p-foot"><span class="p-link" style="color:var(--muted)">Em breve</span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -388,5 +424,20 @@
     function boot(){ size(); init(); if(reduce){ draw(); } else { cancelAnimationFrame(raf); step(); } }
     window.addEventListener('resize', function(){ size(); init(); if(reduce) draw(); });
     boot();
+  })();
+</script>
+
+<script>
+  (function(){
+    var c=document.getElementById('prodCarousel');
+    var prev=document.getElementById('prodPrev'), next=document.getElementById('prodNext');
+    if(!c||!prev||!next) return;
+    function step(){ var card=c.querySelector('.product'); return card ? card.getBoundingClientRect().width + 20 : 400; }
+    function update(){ var max=c.scrollWidth - c.clientWidth - 2; prev.disabled = c.scrollLeft <= 2; next.disabled = c.scrollLeft >= max; }
+    prev.addEventListener('click', function(){ c.scrollBy({left:-step()}); });
+    next.addEventListener('click', function(){ c.scrollBy({left:step()}); });
+    c.addEventListener('scroll', update, {passive:true});
+    window.addEventListener('resize', update);
+    update();
   })();
 </script>
