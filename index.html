@@ -22,6 +22,9 @@
     --text:#F5F6F7; --muted:#8A8F98; --dim:#5A5F68;
     --accent:#F5F6F7; --accent-2:#C6CAD1; --accent-soft:rgba(255,255,255,.07);
     --mint:#3DC79E; --sharp:#2FBE86; --sharp-deep:#0E6E4E;
+    /* Azul de assinatura da XTHUB: a casa tem cor própria, distinta das cores
+       dos produtos (menta, verde, dourado, lima). Usado com parcimônia. */
+    --xt:#5B8AFF; --xt-soft:rgba(91,138,255,.13); --xt-line:rgba(91,138,255,.34);
     --sans:"InterVariable","Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,Roboto,Helvetica,Arial,sans-serif;
     --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
     /* Largura total da tela — o respiro vem do padding lateral proporcional. */
@@ -54,7 +57,7 @@
   .logo use{color:inherit;}
   .nav-links{margin-left:auto; display:flex; align-items:center; gap:34px;}
   .nav-links a{font-size:14.5px; color:var(--muted); font-weight:500; transition:color .18s;}
-  .nav-links a:hover{color:var(--text);}
+  .nav-links a:hover{color:var(--xt);}
   .btn{
     display:inline-flex; align-items:center; gap:9px; font-weight:600; font-size:14.5px;
     padding:11px 20px; border-radius:11px; cursor:pointer; border:1px solid transparent; transition:all .18s;
@@ -99,6 +102,23 @@
 
   /* ---------- áreas ---------- */
   .areas{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:52px;}
+
+  /* ---------- método: as etapas como nós ligados (eco da marca) ---------- */
+  .metodo{list-style:none; margin:56px 0 0; padding:0; display:grid; grid-template-columns:repeat(4,1fr); gap:28px;}
+  .passo{position:relative; padding-top:44px;}
+  /* a linha que liga um nó ao próximo */
+  .passo::before{
+    content:""; position:absolute; top:15px; left:32px; right:-28px; height:1px;
+    background:linear-gradient(90deg, var(--xt-line), rgba(255,255,255,.06));
+  }
+  .passo:last-child::before{display:none;}
+  .passo-n{
+    position:absolute; top:0; left:0; width:32px; height:32px; border-radius:50%;
+    display:grid; place-items:center; font-family:var(--mono); font-size:12px; font-weight:700;
+    color:var(--xt); background:var(--xt-soft); border:1px solid var(--xt-line);
+  }
+  .passo h3{margin:0 0 8px; font-size:17.5px; font-weight:680; letter-spacing:-.01em;}
+  .passo p{margin:0; color:var(--muted); font-size:14.5px; line-height:1.62;}
   .area{
     background:linear-gradient(180deg,var(--surface),var(--ink-2)); border:1px solid var(--line);
     border-radius:18px; padding:26px 24px; transition:border-color .2s, transform .2s;
@@ -200,6 +220,10 @@
   /* laptop pequeno / tablet deitado: 3 colunas começam a apertar */
   @media (max-width:1180px){
     .areas{grid-template-columns:repeat(2,1fr);}
+    .metodo{grid-template-columns:repeat(2,1fr); gap:34px 28px;}
+    /* em 2 colunas a linha só liga o par da esquerda ao da direita */
+    .passo:nth-child(2n)::before{display:none;}
+    .passo:last-child::before{display:none;}
     .foot-grid{grid-template-columns:1fr 1fr; gap:34px;}
     .product{flex:0 0 400px;}
   }
@@ -212,6 +236,13 @@
 
   /* celular */
   @media (max-width:860px){
+    /* no celular vira lista: o nó fica à esquerda e a linha desce ligando */
+    .metodo{grid-template-columns:1fr; gap:0;}
+    .passo{padding:0 0 30px 52px;}
+    .passo::before{display:none!important;}
+    .passo:not(:last-child){border-left:1px solid var(--xt-line); margin-left:16px; padding-left:36px;}
+    .passo:last-child{margin-left:16px; padding-left:36px; padding-bottom:0;}
+    .passo-n{left:-16px; top:-4px;}
     .nav-links a:not(.btn){display:none;}
     .nav-links{gap:14px;}
     .areas{grid-template-columns:1fr; gap:14px; margin-top:38px;}
@@ -276,6 +307,7 @@
     </a>
     <div class="nav-links">
       <a href="#produtos">Produtos</a>
+      <a href="#metodo">Método</a>
       <a href="#sobre">Sobre</a>
       <a href="#contato">Contato</a>
       <a class="btn btn-primary" href="#contato">Fale com a gente</a>
@@ -465,6 +497,37 @@
   </div>
 </section>
 
+<section class="band" id="metodo">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Como a gente constrói.</h2>
+      <p>O mesmo processo que usamos nos nossos produtos, aplicado ao seu.</p>
+    </div>
+    <ol class="metodo">
+      <li class="passo">
+        <span class="passo-n">01</span>
+        <h3>Imersão</h3>
+        <p>Antes da primeira linha de código, entendemos o problema, o mercado e o que está em jogo. Daqui saem o escopo, os riscos e a meta.</p>
+      </li>
+      <li class="passo">
+        <span class="passo-n">02</span>
+        <h3>Construção</h3>
+        <p>Design e engenharia no mesmo time, em ciclos curtos. Você vê o produto de pé cedo, não só no fim.</p>
+      </li>
+      <li class="passo">
+        <span class="passo-n">03</span>
+        <h3>Lançamento</h3>
+        <p>Publicação nas lojas ou na web, com a infraestrutura pronta para aguentar o crescimento.</p>
+      </li>
+      <li class="passo">
+        <span class="passo-n">04</span>
+        <h3>Evolução</h3>
+        <p>Produto no ar é começo, não fim. Acompanhamos o uso real e seguimos melhorando com base em dado, não em achismo.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
 <section class="band" id="sobre">
   <div class="wrap">
     <div class="about-grid">
@@ -473,7 +536,7 @@
         <p class="big">Somos uma empresa de tecnologia focada em construir produtos que resolvem problemas reais. <span>Unimos engenharia, design e dados para lançar produtos que as pessoas usam de verdade, os nossos e os de quem confia a operação à XTHUB.</span></p>
       </div>
       <div class="stats">
-        <div class="stat"><span class="n">3</span><span class="l">produtos próprios em operação</span></div>
+        <div class="stat"><span class="n">4</span><span class="l">produtos próprios no portfólio</span></div>
         <div class="stat"><span class="n">100%</span><span class="l">construídos internamente</span></div>
         <div class="stat"><span class="n">BR</span><span class="l">empresa registrada no Brasil</span></div>
       </div>
