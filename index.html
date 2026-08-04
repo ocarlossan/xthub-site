@@ -614,6 +614,7 @@
           <textarea id="f-obs" name="observacao" placeholder="O que você quer construir, em que etapa está e o prazo que tem em mente."></textarea>
         </div>
       </div>
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;">
       <div class="form-acoes">
         <button class="btn btn-primary" type="submit">Enviar mensagem</button>
         <span class="form-alt">ou escreva para <a href="mailto:contato@xthub.com.br">contato@xthub.com.br</a></span>
@@ -660,12 +661,16 @@
   // WhatsApp comercial (onde o lead realmente é visto). Sem o número preenchido
   // abaixo, cai no email — o formulário nunca fica quebrado.
   (function(){
-    var WHATSAPP = '';                      // <<< WhatsApp da XTHUB: só números com DDI. Ex: '5511999999999'
     var EMAIL    = 'contato@xthub.com.br';
+    var WHATSAPP = '';                      // <<< WhatsApp da XTHUB: só números com DDI. Ex: '5511999999999'
+                                            //     Preenchido, abre o WhatsApp junto com o envio.
+    // Entrega o formulário na caixa do EMAIL acima (site é estático, não tem servidor).
+    var ENDPOINT = 'https://formsubmit.co/ajax/' + EMAIL;
 
     var form = document.getElementById('form-contato');
     if(!form) return;
     var nota = document.getElementById('form-nota');
+    var btn  = form.querySelector('button[type="submit"]');
     var campo = function(id){ return document.getElementById(id); };
 
     // Máscara leve de telefone brasileiro, sem atrapalhar quem colar o número.
@@ -695,21 +700,48 @@
         return;
       }
 
+      if(form.querySelector('[name="_gotcha"]').value) return;   // isca de robô
+
       var linhas = ['Olá, XTHUB! Vim pelo site.', '',
                     'Nome: ' + nome, 'Email: ' + email, 'WhatsApp: ' + tel];
       if(nicho) linhas.push('Nicho: ' + nicho);
       if(obs)   linhas.push('', 'Sobre o projeto:', obs);
       var texto = linhas.join('\n');
 
-      if(WHATSAPP){
-        window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(texto), '_blank', 'noopener');
-        nota.textContent = 'Abrimos o WhatsApp com sua mensagem pronta. É só tocar em enviar.';
-      } else {
+      // Plano B: abre o email do visitante com tudo pronto. Usado se a rede falhar.
+      var abrirEmail = function(){
         window.location.href = 'mailto:' + EMAIL +
           '?subject=' + encodeURIComponent('Contato pelo site: ' + nome) +
           '&body=' + encodeURIComponent(texto);
-        nota.textContent = 'Abrimos seu email com a mensagem pronta. É só enviar.';
-      }
+      };
+
+      btn.disabled = true;
+      nota.textContent = 'Enviando...';
+
+      fetch(ENDPOINT, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+        body: JSON.stringify({
+          _subject: 'Site XTHUB: ' + nome + (nicho ? ' (' + nicho + ')' : ''),
+          _template: 'table',
+          Nome: nome, Email: email, WhatsApp: tel,
+          Nicho: nicho || 'não informado',
+          Projeto: obs || 'não informado'
+        })
+      })
+      .then(function(r){ if(!r.ok) throw new Error('falhou'); return r.json(); })
+      .then(function(){
+        form.reset();
+        nota.textContent = 'Recebemos sua mensagem. A gente responde no seu WhatsApp ou email em breve.';
+        if(WHATSAPP){
+          window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(texto), '_blank', 'noopener');
+        }
+      })
+      .catch(function(){
+        nota.textContent = 'Não conseguimos enviar agora. Abrimos seu email com a mensagem pronta.';
+        abrirEmail();
+      })
+      .finally(function(){ btn.disabled = false; });
     });
   })();
 
