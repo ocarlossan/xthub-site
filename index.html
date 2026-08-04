@@ -194,6 +194,34 @@
 
   /* ---------- contato ---------- */
   .cta-band{text-align:center; padding:104px 0;}
+
+  /* ---------- formulário de contato ---------- */
+  .form{max-width:720px; margin:40px auto 0; text-align:left;}
+  .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .campo{display:flex; flex-direction:column; gap:7px;}
+  .campo.full{grid-column:1 / -1;}
+  .campo label{font-size:12.5px; color:var(--muted); font-weight:600; letter-spacing:.01em;}
+  .campo label span{color:var(--xt);}
+  .campo input, .campo select, .campo textarea{
+    width:100%; box-sizing:border-box; font-family:var(--sans); font-size:15px; color:var(--text);
+    background:var(--surface); border:1px solid var(--line-2); border-radius:11px;
+    padding:13px 15px; outline:none; transition:border-color .18s, box-shadow .18s;
+  }
+  .campo textarea{resize:vertical; min-height:104px; line-height:1.55;}
+  .campo select{appearance:none; cursor:pointer;
+    background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+    background-position:calc(100% - 20px) 21px, calc(100% - 14px) 21px; background-size:6px 6px, 6px 6px;
+    background-repeat:no-repeat; padding-right:42px;}
+  .campo input::placeholder, .campo textarea::placeholder{color:var(--dim);}
+  .campo input:focus, .campo select:focus, .campo textarea:focus{
+    border-color:var(--xt); box-shadow:0 0 0 3px var(--xt-soft);
+  }
+  .campo input:invalid:not(:placeholder-shown){border-color:rgba(255,120,120,.55);}
+  .form-acoes{display:flex; flex-wrap:wrap; align-items:center; gap:16px; margin-top:22px;}
+  .form-acoes .btn{padding:14px 26px; font-size:15px;}
+  .form-alt{font-size:13px; color:var(--muted);}
+  .form-alt a{color:var(--xt); border-bottom:1px solid var(--xt-line);}
+  .form-nota{font-size:12px; color:var(--dim); margin-top:14px;}
   .cta-band h2{font-size:clamp(30px,4.4vw,46px); letter-spacing:-.028em; font-weight:600; margin:0 auto; max-width:32ch; text-wrap:balance;}
   .cta-band p{color:var(--muted); max-width:52ch; margin:16px auto 0; font-size:16.5px;}
   .cta-band .hero-cta{justify-content:center;}
@@ -267,6 +295,10 @@
     /* botões do hero empilhados e ocupando a largura — alvo de toque confortável */
     .hero-cta{gap:10px;}
     .hero-cta .btn{flex:1 1 100%; justify-content:center;}
+    .form-grid{grid-template-columns:1fr; gap:14px;}
+    .form-acoes{flex-direction:column; align-items:stretch; gap:12px;}
+    .form-acoes .btn{justify-content:center;}
+    .form-alt{text-align:center;}
     .product{flex:0 0 86vw; padding:20px 20px;}
     .area{padding:22px 20px;}
     .stat{padding:18px 20px;}
@@ -548,9 +580,46 @@
   <div class="wrap">
     <h2>Vamos construir algo juntos.</h2>
     <p>Tem um produto para tirar do papel? Projetos sob medida, parcerias e imprensa. Fale com a XTHUB.</p>
-    <div class="hero-cta">
-      <a class="btn btn-primary" href="mailto:contato@xthub.com.br">contato@xthub.com.br</a>
-    </div>
+    <form class="form" id="form-contato" novalidate>
+      <div class="form-grid">
+        <div class="campo">
+          <label for="f-nome">Nome <span>*</span></label>
+          <input id="f-nome" name="nome" type="text" placeholder="Seu nome" required autocomplete="name">
+        </div>
+        <div class="campo">
+          <label for="f-email">Email <span>*</span></label>
+          <input id="f-email" name="email" type="email" placeholder="voce@empresa.com.br" required autocomplete="email">
+        </div>
+        <div class="campo">
+          <label for="f-zap">WhatsApp <span>*</span></label>
+          <input id="f-zap" name="whatsapp" type="tel" placeholder="(11) 99999 9999" required autocomplete="tel" inputmode="tel">
+        </div>
+        <div class="campo">
+          <label for="f-nicho">Nicho do produto</label>
+          <select id="f-nicho" name="nicho">
+            <option value="">Selecione</option>
+            <option>Fintech e pagamentos</option>
+            <option>Inteligência artificial</option>
+            <option>Marketplace e e-commerce</option>
+            <option>Saúde</option>
+            <option>Educação</option>
+            <option>Logística</option>
+            <option>Esportes e entretenimento</option>
+            <option>Ainda não sei</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="campo full">
+          <label for="f-obs">Conte um pouco sobre o projeto</label>
+          <textarea id="f-obs" name="observacao" placeholder="O que você quer construir, em que etapa está e o prazo que tem em mente."></textarea>
+        </div>
+      </div>
+      <div class="form-acoes">
+        <button class="btn btn-primary" type="submit">Enviar mensagem</button>
+        <span class="form-alt">ou escreva para <a href="mailto:contato@xthub.com.br">contato@xthub.com.br</a></span>
+      </div>
+      <p class="form-nota" id="form-nota" role="status" aria-live="polite"></p>
+    </form>
   </div>
 </section>
 
@@ -587,6 +656,63 @@
 </footer>
 
 <script>
+  // Formulário de contato. O site é estático, então a mensagem sai pronta pelo
+  // WhatsApp comercial (onde o lead realmente é visto). Sem o número preenchido
+  // abaixo, cai no email — o formulário nunca fica quebrado.
+  (function(){
+    var WHATSAPP = '';                      // <<< WhatsApp da XTHUB: só números com DDI. Ex: '5511999999999'
+    var EMAIL    = 'contato@xthub.com.br';
+
+    var form = document.getElementById('form-contato');
+    if(!form) return;
+    var nota = document.getElementById('form-nota');
+    var campo = function(id){ return document.getElementById(id); };
+
+    // Máscara leve de telefone brasileiro, sem atrapalhar quem colar o número.
+    var zap = campo('f-zap');
+    zap.addEventListener('input', function(){
+      var n = zap.value.replace(/\D/g,'').slice(0,11);
+      if(n.length > 6)      zap.value = '(' + n.slice(0,2) + ') ' + n.slice(2,7) + ' ' + n.slice(7);
+      else if(n.length > 2) zap.value = '(' + n.slice(0,2) + ') ' + n.slice(2);
+      else if(n.length)     zap.value = '(' + n;
+    });
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var d = new FormData(form);
+      var v = function(k){ return (d.get(k) || '').toString().trim(); };
+      var nome = v('nome'), email = v('email'), tel = v('whatsapp'),
+          nicho = v('nicho'), obs = v('observacao');
+
+      if(!nome || !email || !tel){
+        nota.textContent = 'Preencha nome, email e WhatsApp para a gente conseguir te responder.';
+        (!nome ? campo('f-nome') : !email ? campo('f-email') : zap).focus();
+        return;
+      }
+      if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){
+        nota.textContent = 'Confira o email: parece que falta alguma coisa.';
+        campo('f-email').focus();
+        return;
+      }
+
+      var linhas = ['Olá, XTHUB! Vim pelo site.', '',
+                    'Nome: ' + nome, 'Email: ' + email, 'WhatsApp: ' + tel];
+      if(nicho) linhas.push('Nicho: ' + nicho);
+      if(obs)   linhas.push('', 'Sobre o projeto:', obs);
+      var texto = linhas.join('\n');
+
+      if(WHATSAPP){
+        window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(texto), '_blank', 'noopener');
+        nota.textContent = 'Abrimos o WhatsApp com sua mensagem pronta. É só tocar em enviar.';
+      } else {
+        window.location.href = 'mailto:' + EMAIL +
+          '?subject=' + encodeURIComponent('Contato pelo site: ' + nome) +
+          '&body=' + encodeURIComponent(texto);
+        nota.textContent = 'Abrimos seu email com a mensagem pronta. É só enviar.';
+      }
+    });
+  })();
+
   // Carrossel de produtos: clona a série até cobrir a tela (sem buraco em nenhuma
   // resolução) e mantém a velocidade constante independente da quantidade de cards.
   (function(){
