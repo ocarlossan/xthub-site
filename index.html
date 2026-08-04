@@ -71,17 +71,17 @@
   #net{position:absolute; inset:0; width:100%; height:100%; z-index:0; opacity:.55;}
   .hero::after{
     content:""; position:absolute; z-index:1; left:50%; top:-8%; transform:translateX(-50%);
-    width:820px; height:520px; pointer-events:none;
+    width:min(820px, 130vw); height:min(520px, 70vh); pointer-events:none;
     background:radial-gradient(closest-side, rgba(255,255,255,.06), transparent 72%);
   }
-  .hero .wrap{position:relative; z-index:2;}
+  .hero .wrap{position:relative; z-index:2; text-align:center;}
   .hero h1{
-    font-size:clamp(38px,6.4vw,68px); line-height:1.05; letter-spacing:-.028em; font-weight:540;
-    margin:26px 0 0; max-width:15ch; text-wrap:balance;
+    font-size:clamp(38px,6.4vw,68px); line-height:1.06; letter-spacing:-.028em; font-weight:540;
+    margin:0 auto; max-width:26ch; text-wrap:balance;
   }
   .hero h1 em{font-style:normal; color:var(--text);}
-  .lead{font-size:clamp(16px,2vw,19px); color:var(--muted); max-width:56ch; margin:24px 0 0;}
-  .hero-cta{display:flex; flex-wrap:wrap; gap:14px; margin-top:38px;}
+  .lead{font-size:clamp(16px,2vw,19px); color:var(--muted); max-width:72ch; margin:24px auto 0; text-wrap:pretty;}
+  .hero-cta{display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:38px;}
   .trust{
     display:flex; flex-wrap:wrap; gap:10px 26px; margin-top:52px; padding-top:26px;
     border-top:1px solid var(--line); font-family:var(--mono); font-size:12.5px; color:var(--dim);
@@ -92,9 +92,10 @@
   /* ---------- section frame ---------- */
   section{position:relative;}
   .band{padding:96px 0; border-top:1px solid var(--line);}
-  .sec-head{max-width:60ch;}
-  .sec-head h2{font-size:clamp(27px,3.6vw,38px); letter-spacing:-.022em; font-weight:600; margin:16px 0 0; text-wrap:balance;}
-  .sec-head p{color:var(--muted); margin:14px 0 0; font-size:16.5px;}
+  .sec-head{margin-inline:auto; text-align:center;}
+  /* medida própria: o título cabe numa linha; o parágrafo mantém a medida de leitura */
+  .sec-head h2{font-size:clamp(27px,3.6vw,38px); letter-spacing:-.022em; font-weight:600; margin:0 auto; max-width:36ch; text-wrap:balance;}
+  .sec-head p{color:var(--muted); margin:14px auto 0; font-size:16.5px; max-width:60ch; text-wrap:pretty;}
 
   /* ---------- áreas ---------- */
   .areas{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:52px;}
@@ -112,15 +113,17 @@
   .area p{margin:0; color:var(--muted); font-size:14.5px;}
 
   /* ---------- produtos ---------- */
-  .prod-head{display:flex; justify-content:space-between; align-items:flex-end; gap:24px;}
+  .prod-head{display:flex; justify-content:center; align-items:flex-end; gap:24px;}
   .prod-arrows{display:flex; gap:10px; flex:none;}
   .parrow{width:44px; height:44px; border-radius:50%; border:1px solid var(--line-2); background:transparent; color:var(--text); font-size:20px; line-height:1; cursor:pointer; display:grid; place-items:center; transition:border-color .18s, background .18s, opacity .18s;}
   .parrow:hover{border-color:var(--accent); background:rgba(255,255,255,.05);}
   .parrow:disabled{opacity:.28; cursor:default;}
   .products{margin-top:34px; overflow:hidden; padding:6px 0; -webkit-mask:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent); mask:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);}
-  .products-track{display:flex; width:max-content; animation:prodspin 22s linear infinite; will-change:transform;}
+  /* Marquee infinito: o JS clona a lista até encher a tela e define --spin-w
+     (largura de UMA série). Assim nunca sobra buraco, em qualquer resolução. */
+  .products-track{display:flex; width:max-content; animation:prodspin var(--spin-t,22s) linear infinite; will-change:transform;}
   .products:hover .products-track{animation-play-state:paused;}
-  @keyframes prodspin{from{transform:translate3d(0,0,0)} to{transform:translate3d(-50%,0,0)}}
+  @keyframes prodspin{from{transform:translate3d(0,0,0)} to{transform:translate3d(calc(-1 * var(--spin-w,50%)),0,0)}}
   .product{flex:0 0 440px; margin-right:20px;}
   .product{
     position:relative; overflow:hidden; border:1px solid var(--line-2); border-radius:22px;
@@ -155,7 +158,7 @@
 
   /* ---------- contato ---------- */
   .cta-band{text-align:center; padding:104px 0;}
-  .cta-band h2{font-size:clamp(30px,4.4vw,46px); letter-spacing:-.028em; font-weight:600; margin:16px auto 0; max-width:18ch; text-wrap:balance;}
+  .cta-band h2{font-size:clamp(30px,4.4vw,46px); letter-spacing:-.028em; font-weight:600; margin:0 auto; max-width:32ch; text-wrap:balance;}
   .cta-band p{color:var(--muted); max-width:52ch; margin:16px auto 0; font-size:16.5px;}
   .cta-band .hero-cta{justify-content:center;}
 
@@ -168,24 +171,70 @@
   .foot-col a:hover{color:var(--accent-2);}
   .legal{
     margin-top:44px; padding-top:26px; border-top:1px solid var(--line);
-    display:flex; flex-wrap:wrap; gap:8px 24px; align-items:center;
+    display:flex; flex-wrap:wrap; gap:8px 24px; align-items:center; justify-content:center;
+    text-align:center;
     font-family:var(--mono); font-size:12px; color:var(--dim); letter-spacing:.02em;
   }
   .legal .cnpj{color:var(--muted);}
-  .legal .sp{margin-left:auto;}
 
   :focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px;}
 
+  /* ---------- responsivo ---------- */
+
+  /* laptop pequeno / tablet deitado: 3 colunas começam a apertar */
+  @media (max-width:1180px){
+    .areas{grid-template-columns:repeat(2,1fr);}
+    .foot-grid{grid-template-columns:1fr 1fr; gap:34px;}
+    .product{flex:0 0 400px;}
+  }
+
+  /* tablet em pé: o bloco "sobre" empilha antes de virar celular */
+  @media (max-width:980px){
+    .about-grid{grid-template-columns:1fr; gap:34px;}
+    .hero{padding:96px 0 84px;}
+  }
+
+  /* celular */
   @media (max-width:860px){
     .nav-links a:not(.btn){display:none;}
-    .areas{grid-template-columns:1fr;}
-    .product{flex:0 0 82vw; max-width:420px; margin-right:16px;}
+    .nav-links{gap:14px;}
+    .areas{grid-template-columns:1fr; gap:14px; margin-top:38px;}
+    .product{flex:0 0 82vw; max-width:420px; margin-right:16px; min-height:0; padding:28px 26px;}
     .prod-arrows{display:none;}
-    .prod-head{flex-direction:column; align-items:flex-start; gap:4px;}
+    .prod-head{flex-direction:column; align-items:center; gap:4px;}
     .about-grid{grid-template-columns:1fr; gap:34px;}
     .foot-grid{grid-template-columns:1fr; gap:32px;}
     .band{padding:74px 0;}
     .hero{padding:82px 0 72px;}
+    .cta-band{padding:80px 0;}
+    /* a máscara lateral come muito espaço em tela estreita */
+    .products{-webkit-mask:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent);
+              mask:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent);}
+  }
+
+  /* celular comum (≤ 560px) */
+  @media (max-width:560px){
+    .hero{padding:62px 0 54px;}
+    .band{padding:58px 0;}
+    .cta-band{padding:62px 0;}
+    /* botões do hero empilhados e ocupando a largura — alvo de toque confortável */
+    .hero-cta{gap:10px;}
+    .hero-cta .btn{flex:1 1 100%; justify-content:center;}
+    .product{flex:0 0 86vw; padding:24px 22px;}
+    .area{padding:22px 20px;}
+    .stat{padding:18px 20px;}
+    .stat .n{font-size:26px;}
+    .nav-in{height:62px; gap:12px;}
+    .btn{padding:10px 16px; font-size:14px;}
+  }
+
+  /* celular pequeno (≤ 400px) */
+  @media (max-width:400px){
+    .brand{font-size:16px; gap:9px;}
+    .logo{width:30px; height:30px;}
+    .btn{padding:9px 13px; font-size:13.5px;}
+    .product{flex:0 0 88vw;}
+    .stat{flex-direction:column; align-items:flex-start; gap:4px;}
   }
   @media (prefers-reduced-motion:reduce){ .products-track{animation:none;} .products{overflow-x:auto; -webkit-mask:none; mask:none;} }
 </style>
@@ -222,7 +271,6 @@
 <header class="hero">
   <canvas id="net" aria-hidden="true"></canvas>
   <div class="wrap">
-    <span class="eyebrow">Serviços e Tecnologias</span>
     <h1>Construímos produtos digitais que as pessoas usam <em>todo dia</em>.</h1>
     <p class="lead">A XTHUB é uma empresa brasileira de tecnologia. Idealizamos, lançamos e operamos nossos próprios produtos, de infraestrutura financeira a inteligência artificial.</p>
     <div class="hero-cta">
@@ -235,7 +283,6 @@
 <section class="band" id="fazemos">
   <div class="wrap">
     <div class="sec-head">
-      <span class="eyebrow">O que fazemos</span>
       <h2>Um hub de produtos de tecnologia.</h2>
       <p>Não terceirizamos ideias: construímos nossos próprios aplicativos do primeiro traço ao suporte, e cuidamos deles em produção.</p>
     </div>
@@ -263,7 +310,6 @@
   <div class="wrap">
     <div class="prod-head">
       <div class="sec-head">
-        <span class="eyebrow">Produtos</span>
         <h2>Nossos produtos.</h2>
         <p>Produtos desenvolvidos e operados pela XTHUB.</p>
       </div>
@@ -314,50 +360,6 @@
         <p>Inteligência artificial para o mercado financeiro. Sinais de trading em forex e ouro (EUR/USD e XAU/USD) com gestão de risco, validados por backtest.</p>
         <div class="p-foot"><span class="p-link" style="color:var(--muted)">Em breve</span></div>
       </div>
-      <a aria-hidden="true" tabindex="-1" class="product bripi" href="https://bripi.com.br/" target="_blank" rel="noopener">
-        <div class="p-top">
-          <span class="p-mark" style="background:linear-gradient(145deg,#3DC79E,#2C9C83)">
-            <svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true"><rect x="27" y="18" width="14" height="64" rx="7" fill="#06251B"/><path fill="#06251B" fill-rule="evenodd" d="M53 38a22 22 0 1 0 0 44 22 22 0 0 0 0-44Zm0 13a9 9 0 1 1 0 18 9 9 0 0 1 0-18Z"/></svg>
-          </span>
-          <span class="p-name">Bripi</span>
-        </div>
-        <p>Pagamentos via Pix com USDT e uma wallet cripto que fala a língua do Brasil. Deposite, converta na hora e pague no Pix com saldo em dólar digital.</p>
-        <div class="p-foot"><span class="p-link">Acessar o site <span aria-hidden="true">→</span></span></div>
-      </a>
-      <a aria-hidden="true" tabindex="-1" class="product sharp" href="https://sharpai.pro" target="_blank" rel="noopener">
-        <div class="p-top">
-          <span class="p-mark" style="background:var(--sharp-deep)">
-            <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6">
-              <path d="M6 14.5 12 9 18 14.5" stroke="#fff"/>
-              <path d="M6 18.6 12 13.1 18 18.6" stroke="rgba(255,255,255,.5)"/>
-            </svg>
-          </span>
-          <span class="p-name">SharpAI</span>
-        </div>
-        <p>Inteligência artificial para análise de dados esportivos e probabilidades. Modelos treinados em milhões de jogos, transformando dados em leitura clara.</p>
-        <div class="p-foot"><span class="p-link">Acessar o site <span aria-hidden="true">→</span></span></div>
-      </a>
-      <div aria-hidden="true" class="product aurax">
-        <div class="p-top">
-          <span class="p-mark" style="background:transparent">
-            <svg width="44" height="44" viewBox="0 0 256 256" fill="none" aria-hidden="true">
-              <defs>
-                <linearGradient id="auraxTile2" x1="0" y1="0" x2="256" y2="256" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#141A26"/><stop offset="1" stop-color="#0A0D14"/></linearGradient>
-                <linearGradient id="auraxGold2" x1="70" y1="52" x2="188" y2="204" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FCE7A6"/><stop offset="0.45" stop-color="#F5C242"/><stop offset="1" stop-color="#E0940A"/></linearGradient>
-              </defs>
-              <rect width="256" height="256" rx="58" fill="url(#auraxTile2)"/>
-              <rect x="1.5" y="1.5" width="253" height="253" rx="56.5" fill="none" stroke="#F5C242" stroke-opacity="0.16" stroke-width="3"/>
-              <path d="M128 54 L188 200" stroke="url(#auraxGold2)" stroke-width="24" stroke-linecap="round"/>
-              <path d="M128 54 L68 200" stroke="url(#auraxGold2)" stroke-width="24" stroke-linecap="round"/>
-              <path d="M96 150 L160 150" stroke="url(#auraxGold2)" stroke-width="20" stroke-linecap="round"/>
-              <circle cx="128" cy="54" r="9" fill="#FFF4D6"/>
-            </svg>
-          </span>
-          <span class="p-name">Aurax</span>
-        </div>
-        <p>Inteligência artificial para o mercado financeiro. Sinais de trading em forex e ouro (EUR/USD e XAU/USD) com gestão de risco, validados por backtest.</p>
-        <div class="p-foot"><span class="p-link" style="color:var(--muted)">Em breve</span></div>
-      </div>
       </div>
     </div>
   </div>
@@ -371,7 +373,7 @@
         <p class="big">Somos uma empresa de tecnologia focada em construir produtos que resolvem problemas reais. <span>Unimos engenharia, design e dados para lançar aplicativos que as pessoas usam de verdade, e que continuamos evoluindo depois no ar.</span></p>
       </div>
       <div class="stats">
-        <div class="stat"><span class="n">2</span><span class="l">produtos próprios em operação</span></div>
+        <div class="stat"><span class="n">3</span><span class="l">produtos próprios em operação</span></div>
         <div class="stat"><span class="n">100%</span><span class="l">construídos internamente</span></div>
         <div class="stat"><span class="n">BR</span><span class="l">empresa registrada no Brasil</span></div>
       </div>
@@ -381,7 +383,6 @@
 
 <section class="band cta-band" id="contato">
   <div class="wrap">
-    <span class="eyebrow">Contato</span>
     <h2>Vamos construir algo juntos.</h2>
     <p>Parcerias, imprensa ou oportunidades. Fale com a XTHUB.</p>
     <div class="hero-cta">
@@ -421,6 +422,53 @@
 </footer>
 
 <script>
+  // Carrossel de produtos: clona a série até cobrir a tela (sem buraco em nenhuma
+  // resolução) e mantém a velocidade constante independente da quantidade de cards.
+  (function(){
+    var track = document.querySelector('.products-track');
+    var viewport = document.querySelector('.products');
+    if(!track || !viewport) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce) return;
+
+    var base = Array.prototype.slice.call(track.children);   // a série original
+    if(!base.length) return;
+    var SPEED = 62;                                          // px por segundo
+
+    function medir(){
+      var w = 0;
+      base.forEach(function(el){
+        var cs = getComputedStyle(el);
+        w += el.offsetWidth + parseFloat(cs.marginRight || 0) + parseFloat(cs.marginLeft || 0);
+      });
+      return w;
+    }
+
+    function montar(){
+      // volta ao estado original antes de recalcular (evita acumular clones)
+      while(track.children.length > base.length) track.removeChild(track.lastChild);
+      var serie = medir();
+      if(!serie) return;
+      // precisa de: uma série pra rolar + conteúdo suficiente pra cobrir a viewport
+      var alvo = viewport.offsetWidth + serie;
+      var copias = Math.max(1, Math.ceil(alvo / serie));
+      for(var i=0; i<copias; i++){
+        base.forEach(function(el){
+          var c = el.cloneNode(true);
+          c.setAttribute('aria-hidden','true');
+          c.setAttribute('tabindex','-1');
+          track.appendChild(c);
+        });
+      }
+      track.style.setProperty('--spin-w', serie + 'px');
+      track.style.setProperty('--spin-t', (serie / SPEED) + 's');
+    }
+
+    montar();
+    window.addEventListener('load', montar);               // depois das fontes/imagens
+    var t; window.addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(montar, 180); });
+  })();
+
   // rede de nós ambiente (motivo "hub") — leve e discreta
   (function(){
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
