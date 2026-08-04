@@ -24,7 +24,9 @@
     --mint:#3DC79E; --sharp:#2FBE86; --sharp-deep:#0E6E4E;
     --sans:"InterVariable","Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,Roboto,Helvetica,Arial,sans-serif;
     --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
-    --wrap:1120px;
+    /* Largura total da tela — o respiro vem do padding lateral proporcional. */
+    --wrap:100%;
+    --gutter:clamp(20px, 4.5vw, 88px);
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -35,7 +37,7 @@
   }
   @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto;} *{animation:none!important;transition:none!important;} }
   a{color:inherit; text-decoration:none;}
-  .wrap{max-width:var(--wrap); margin:0 auto; padding:0 28px;}
+  .wrap{max-width:var(--wrap); margin:0 auto; padding:0 var(--gutter);}
   .eyebrow{
     font-family:var(--mono); font-size:12px; letter-spacing:.2em; text-transform:uppercase;
     color:var(--muted);
