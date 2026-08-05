@@ -67,8 +67,8 @@
   h1 em, h2 em, .big em{font-style:normal; color:var(--xt);}
   .wrap{max-width:var(--wrap); margin:0 auto; padding:0 var(--gutter);}
   .eyebrow{
-    font-size:12.5px; letter-spacing:.055em; text-transform:uppercase; font-weight:600;
-    color:var(--dim);
+    font-size:12.5px; letter-spacing:.055em; text-transform:uppercase; font-weight:700;
+    color:var(--xt);
   }
 
   /* ---------- nav ---------- */
@@ -236,14 +236,19 @@
   /* ---------- produtos ---------- */
   .prod-head{display:flex; justify-content:center; align-items:flex-end; gap:24px;}
   .sec-regua{
-    height:1px; margin:38px 0 0; border:0;
+    height:1px; margin:38px auto 0; border:0; width:min(80vw, 100%);
     background:linear-gradient(90deg, var(--xt) 0%, var(--xt-line) 42%, rgba(255,255,255,.05) 100%);
   }
   .prod-arrows{display:flex; gap:10px; flex:none;}
   .parrow{width:44px; height:44px; border-radius:50%; border:1px solid var(--line-2); background:transparent; color:var(--text); font-size:20px; line-height:1; cursor:pointer; display:grid; place-items:center; transition:border-color .18s, background .18s, opacity .18s;}
   .parrow:hover{border-color:var(--accent); background:rgba(255,255,255,.05);}
   .parrow:disabled{opacity:.28; cursor:default;}
-  .products{margin-top:34px; overflow:hidden; padding:6px 0; -webkit-mask:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent); mask:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);}
+  .products{
+    width:min(80vw, 100%); margin-inline:auto;
+    margin-top:34px; overflow:hidden; padding:6px 0;
+    -webkit-mask:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+            mask:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+  }
   /* Marquee infinito: o JS clona a lista até encher a tela e define --spin-w
      (largura de UMA série). Assim nunca sobra buraco, em qualquer resolução. */
   .products-track{display:flex; width:max-content; animation:prodspin var(--spin-t,22s) linear infinite; will-change:transform;}
@@ -464,8 +469,10 @@
     .hero{padding:0 0 78px;}
     .cta-band{padding:80px 0;}
     /* a máscara lateral come muito espaço em tela estreita */
-    .products{-webkit-mask:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent);
+    .products{width:100%;
+      -webkit-mask:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent);
               mask:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent);}
+    .sec-regua{width:100%;}
     .logo-emp{padding:0 26px; gap:12px;}
     .le-mark{width:42px; height:42px; border-radius:12px; padding:9px;}
     .le-nome{font-size:22px;}
