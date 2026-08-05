@@ -153,8 +153,8 @@
     66%{transform:translate3d(1.5%,-2%,0)}
   }
   @media (prefers-reduced-motion:reduce){
-    .mancha{animation:none!important;}
-    .grao{animation:none!important;}
+    .mancha, .grao, .foot-brilho{animation:none!important;}
+    .band::before, footer::before{animation:none!important; opacity:.35;}
   }
   .hero .wrap{position:relative; z-index:2; text-align:center;}
   .hero h1{
@@ -171,7 +171,27 @@
 
   /* ---------- section frame ---------- */
   section{position:relative;}
-  .band{padding:96px 0; border-top:1px solid var(--line);}
+  .band{padding:96px 0; border-top:1px solid var(--line); position:relative;}
+  /* Divisor vivo: uma luz percorre a linha que separa as seções. Os atrasos
+     são diferentes para as luzes nunca andarem em bloco. */
+  /* A luz anda por transform, nao por background-position: transform roda no
+     compositor e nao depende de recalculo de estilo a cada quadro. */
+  .band::before, footer::before{
+    content:""; position:absolute; top:-1px; left:0; width:26%; height:1px;
+    pointer-events:none; will-change:transform;
+    background:linear-gradient(90deg, transparent, var(--xt), transparent);
+    animation:luzDivisor 11s linear infinite;
+  }
+  .band:nth-of-type(2)::before{animation-delay:-3.6s;}
+  .band:nth-of-type(3)::before{animation-delay:-7.2s;}
+  footer::before{animation-delay:-9.4s;}
+  @keyframes luzDivisor{
+    0%   {transform:translateX(-100%); opacity:0;}
+    6%   {opacity:.85;}
+    46%  {transform:translateX(284%);  opacity:.85;}
+    53%  {transform:translateX(284%);  opacity:0;}
+    100% {transform:translateX(284%);  opacity:0;}
+  }
   .sec-head{margin-inline:auto; text-align:center;}
   /* medida própria: o título cabe numa linha; o parágrafo mantém a medida de leitura */
   .sec-head h2{font-size:clamp(28px,3.7vw,40px); letter-spacing:-.003em; font-weight:470; margin:0 auto; max-width:36ch; text-wrap:balance;}
@@ -270,8 +290,6 @@
   .product:hover::before{opacity:1;}
   .product:hover{transform:translateY(-4px); border-color:var(--brand);}
   /* mini-visual: a "cara" do que cada produto faz */
-  .p-viz{margin-top:auto; padding-top:18px; position:relative; z-index:1;}
-  .p-viz svg{display:block; width:100%; height:36px; overflow:visible;}
   .p-top{display:flex; align-items:center; gap:11px; position:relative; z-index:1;}
   /* Logo em cor única. As marcas nascem coloridas, mas aqui elas viram uma
      coisa só, para o card não virar arco-íris. A cor de cada produto continua
@@ -292,7 +310,7 @@
   }
   .p-tag::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--brand); flex:none;}
   .product p{color:var(--muted); font-size:14px; line-height:1.6; margin:14px 0 0; position:relative; z-index:1;}
-  .p-foot{margin-top:0; padding-top:16px; position:relative; z-index:1;}
+  .p-foot{margin-top:auto; padding-top:20px; position:relative; z-index:1;}
   .p-link{font-weight:600; font-size:13.5px; color:var(--text); display:inline-flex; align-items:center; gap:8px; transition:gap .2s;}
   .p-link:hover{gap:13px;}
 
@@ -339,7 +357,23 @@
   .cta-band p{color:var(--muted); max-width:52ch; margin:16px auto 0; font-size:16.5px;}
 
   /* ---------- footer ---------- */
-  footer{padding:56px 0 46px; background:transparent;}
+  footer{padding:56px 0 46px; background:transparent; position:relative;
+    border-top:1px solid var(--line); overflow:hidden;}
+  .foot-fundo{position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none;}
+  .foot-fundo .malha{opacity:.55;}
+  /* brilho baixo que respira, fechando a página */
+  .foot-brilho{
+    position:absolute; left:50%; bottom:-58%; transform:translateX(-50%);
+    width:min(1100px,120vw); height:min(460px,60vh); border-radius:50%;
+    filter:blur(90px); pointer-events:none;
+    background:radial-gradient(circle, rgba(91,138,255,.22), transparent 68%);
+    animation:respira 13s ease-in-out infinite alternate;
+  }
+  @keyframes respira{
+    from{opacity:.45; transform:translateX(-50%) scale(1);}
+    to  {opacity:.85; transform:translateX(-50%) scale(1.18);}
+  }
+  footer .wrap{position:relative; z-index:1;}
   .foot-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:40px;}
   .foot-brand p{color:var(--muted); font-size:14px; max-width:34ch; margin:16px 0 0;}
   .foot-col h4{font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--dim); margin:0 0 16px; font-weight:600;}
@@ -534,7 +568,7 @@
     <span class="mancha a"></span>
     <span class="mancha b"></span>
     <span class="mancha c"></span>
-    <canvas class="malha" id="malha"></canvas>
+    <canvas class="malha" id="malha" data-esp="34" data-obras="7"></canvas>
     <span class="grao"></span>
   </div>
   <div class="wrap">
@@ -645,16 +679,6 @@
           <span class="p-tag">Fintech</span>
         </div>
         <p>Pagamentos via Pix com USDT e uma wallet cripto que fala a língua do Brasil. Deposite, converta na hora e pague no Pix com saldo em dólar digital.</p>
-        <div class="p-viz" aria-hidden="true">
-          <svg viewBox="0 0 200 36" fill="none">
-            <path d="M4 11 H150" stroke="var(--brand)" stroke-width="2.5" stroke-linecap="round"/>
-            <path d="M143 5 L150 11 L143 17" stroke="var(--brand)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M196 27 H50" stroke="var(--brand)" stroke-width="2.5" stroke-linecap="round" opacity=".42"/>
-            <path d="M57 21 L50 27 L57 33" stroke="var(--brand)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".42"/>
-            <circle cx="4" cy="11" r="3.5" fill="var(--brand)"/>
-            <circle cx="196" cy="27" r="3.5" fill="var(--brand)" opacity=".42"/>
-          </svg>
-        </div>
         <div class="p-foot"><span class="p-link">Acessar o site <span aria-hidden="true">→</span></span></div>
       </a>
       <a class="product sharp" href="https://sharpai.pro" target="_blank" rel="noopener">
@@ -669,16 +693,6 @@
           <span class="p-tag">Esportes</span>
         </div>
         <p>Inteligência artificial para análise de dados esportivos e probabilidades. Modelos treinados em milhões de jogos, transformando dados em leitura clara.</p>
-        <div class="p-viz" aria-hidden="true">
-          <svg viewBox="0 0 200 36" fill="none">
-            <rect x="0" y="2"  width="200" height="7" rx="3.5" fill="var(--brand)" opacity=".15"/>
-            <rect x="0" y="2"  width="126" height="7" rx="3.5" fill="var(--brand)"/>
-            <rect x="0" y="14.5" width="200" height="7" rx="3.5" fill="var(--brand)" opacity=".15"/>
-            <rect x="0" y="14.5" width="58"  height="7" rx="3.5" fill="var(--brand)" opacity=".62"/>
-            <rect x="0" y="27" width="200" height="7" rx="3.5" fill="var(--brand)" opacity=".15"/>
-            <rect x="0" y="27" width="32"  height="7" rx="3.5" fill="var(--brand)" opacity=".38"/>
-          </svg>
-        </div>
         <div class="p-foot"><span class="p-link">Acessar o site <span aria-hidden="true">→</span></span></div>
       </a>
       <div class="product aurax">
@@ -701,18 +715,6 @@
           <span class="p-tag">Trading</span>
         </div>
         <p>Inteligência artificial para o mercado financeiro. Sinais de trading em forex e ouro (EUR/USD e XAU/USD) com gestão de risco, validados por backtest.</p>
-        <div class="p-viz" aria-hidden="true">
-          <svg viewBox="0 0 200 36" fill="none">
-            <path d="M6 28 L44 22 L82 25 L120 13 L158 16 L194 4" stroke="var(--brand)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>
-            <g fill="var(--brand)">
-              <rect x="18" y="20" width="7" height="12" rx="2" opacity=".8"/><rect x="20.5" y="16" width="2" height="20" rx="1" opacity=".5"/>
-              <rect x="60" y="17" width="7" height="14" rx="2" opacity=".8"/><rect x="62.5" y="13" width="2" height="22" rx="1" opacity=".5"/>
-              <rect x="102" y="10" width="7" height="15" rx="2"/><rect x="104.5" y="6" width="2" height="23" rx="1" opacity=".55"/>
-              <rect x="144" y="13" width="7" height="12" rx="2" opacity=".8"/><rect x="146.5" y="9" width="2" height="20" rx="1" opacity=".5"/>
-              <rect x="186" y="2" width="7" height="14" rx="2"/><rect x="188.5" y="0" width="2" height="19" rx="1" opacity=".55"/>
-            </g>
-          </svg>
-        </div>
         <div class="p-foot"><span class="p-link" style="color:var(--muted)">Em breve</span></div>
       </div>
       <div class="product zeeva">
@@ -732,36 +734,6 @@
           <span class="p-tag">Música</span>
         </div>
         <p>Inteligência artificial para artistas e gravadoras. Analisa o potencial de viralização de uma música e orienta o lançamento com base em dados reais das plataformas.</p>
-        <div class="p-viz" aria-hidden="true">
-          <svg viewBox="0 0 200 36" fill="none">
-            <g fill="var(--brand)">
-              <rect x="2" y="14" width="4" height="8" rx="2" opacity=".45"/>
-              <rect x="10" y="10" width="4" height="16" rx="2" opacity=".55"/>
-              <rect x="18" y="5" width="4" height="26" rx="2" opacity=".75"/>
-              <rect x="26" y="1" width="4" height="34" rx="2"/>
-              <rect x="34" y="8" width="4" height="20" rx="2" opacity=".65"/>
-              <rect x="42" y="4" width="4" height="28" rx="2" opacity=".85"/>
-              <rect x="50" y="12" width="4" height="12" rx="2" opacity=".5"/>
-              <rect x="58" y="7" width="4" height="22" rx="2" opacity=".7"/>
-              <rect x="66" y="2" width="4" height="32" rx="2"/>
-              <rect x="74" y="9" width="4" height="18" rx="2" opacity=".6"/>
-              <rect x="82" y="13" width="4" height="10" rx="2" opacity=".45"/>
-              <rect x="90" y="6" width="4" height="24" rx="2" opacity=".75"/>
-              <rect x="98" y="3" width="4" height="30" rx="2" opacity=".9"/>
-              <rect x="106" y="11" width="4" height="14" rx="2" opacity=".5"/>
-              <rect x="114" y="5" width="4" height="26" rx="2" opacity=".75"/>
-              <rect x="122" y="1" width="4" height="34" rx="2"/>
-              <rect x="130" y="8" width="4" height="20" rx="2" opacity=".65"/>
-              <rect x="138" y="12" width="4" height="12" rx="2" opacity=".5"/>
-              <rect x="146" y="4" width="4" height="28" rx="2" opacity=".85"/>
-              <rect x="154" y="7" width="4" height="22" rx="2" opacity=".7"/>
-              <rect x="162" y="10" width="4" height="16" rx="2" opacity=".55"/>
-              <rect x="170" y="3" width="4" height="30" rx="2" opacity=".9"/>
-              <rect x="178" y="9" width="4" height="18" rx="2" opacity=".6"/>
-              <rect x="186" y="13" width="4" height="10" rx="2" opacity=".45"/>
-            </g>
-          </svg>
-        </div>
         <div class="p-foot"><span class="p-link" style="color:var(--muted)">Em breve</span></div>
       </div>
       </div>
@@ -869,6 +841,10 @@
 </section>
 
 <footer>
+  <div class="foot-fundo" aria-hidden="true">
+    <canvas class="malha" data-esp="42" data-obras="4"></canvas>
+    <span class="foot-brilho"></span>
+  </div>
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
@@ -1032,15 +1008,16 @@
   })();
 
 
-  // Fundo do hero: uma planta sendo construída. Sobre uma malha discreta,
-  // traçados ortogonais avançam nó a nó, acendem o caminho e depois somam ao
-  // desenho antes de sumir. A ideia é construção acontecendo, não enfeite.
-  (function(){
-    var cv = document.getElementById('malha'); if(!cv) return;
+  // Uma planta sendo construída. Sobre uma malha discreta, traçados ortogonais
+  // avançam nó a nó, acendem o caminho e somem depois. A ideia é construção
+  // acontecendo, não enfeite. O mesmo motor atende o hero e o rodapé: cada
+  // canvas .malha ganha a sua instância, com densidade própria.
+  function montarMalha(cv){
     var ctx = cv.getContext('2d'); if(!ctx) return;
     var reduz = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var ESP = 34, cols = 0, rows = 0, w = 0, h = 0, raf = 0, ultimo = 0;
-    var obras = [], QTD = 7;
+    var ESP = Number(cv.dataset.esp) || 34;
+    var QTD = Number(cv.dataset.obras) || 7;
+    var cols = 0, rows = 0, w = 0, h = 0, raf = 0, ultimo = 0, obras = [];
 
     function sortear(n){ return Math.floor(Math.random() * n); }
 
@@ -1177,7 +1154,8 @@
         if(medir() && reduz){ ctx.clearRect(0,0,w,h); malha(); }
       }, 180);
     });
-  })();
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('canvas.malha'), montarMalha);
 
   // Entrada por scroll. A classe .js só é ligada aqui: se o JS não rodar, o
   // conteúdo nunca fica invisível.
