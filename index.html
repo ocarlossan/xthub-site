@@ -86,8 +86,8 @@
   }
   .wrap{max-width:var(--wrap); margin:0 auto; padding:0 var(--gutter);}
   .eyebrow{
-    font-family:var(--mono); font-size:12px; letter-spacing:.2em; text-transform:uppercase;
-    color:var(--muted);
+    font-size:12.5px; letter-spacing:.055em; text-transform:uppercase; font-weight:600;
+    color:var(--dim);
   }
 
   /* ---------- nav ---------- */
@@ -117,7 +117,7 @@
      grao por cima. O grao e o que tira o aspecto liso e sintetico do gradiente. */
   .fundo{position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none;}
   .mancha{
-    position:absolute; border-radius:50%; filter:blur(84px); opacity:.62;
+    position:absolute; border-radius:50%; filter:blur(88px); opacity:.5;
     will-change:transform;
   }
   .mancha.a{
@@ -138,9 +138,11 @@
   @keyframes deriva-a{from{transform:translate3d(0,0,0) scale(1)}   to{transform:translate3d(9vw,7vh,0) scale(1.16)}}
   @keyframes deriva-b{from{transform:translate3d(0,0,0) scale(1.1)} to{transform:translate3d(-8vw,9vh,0) scale(.92)}}
   @keyframes deriva-c{from{transform:translate3d(-6vw,0,0) scale(1)}to{transform:translate3d(7vw,-5vh,0) scale(1.2)}}
+  /* malha de pontos: campo de interferencia desenhado no canvas */
+  .malha{position:absolute; inset:0; width:100%; height:100%; z-index:1; display:block;}
   /* grao gerado no proprio SVG: nenhuma imagem para baixar */
   .grao{
-    position:absolute; inset:-50%; z-index:1; pointer-events:none;
+    position:absolute; inset:-50%; z-index:2; pointer-events:none;
     opacity:.075; mix-blend-mode:overlay;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     animation:tremor 700ms steps(3) infinite;
@@ -163,8 +165,7 @@
   .lead{font-size:clamp(16px,2vw,19px); color:var(--muted); max-width:72ch; margin:24px auto 0; text-wrap:pretty;}
   .trust{
     display:flex; flex-wrap:wrap; gap:10px 26px; margin-top:52px; padding-top:26px;
-    border-top:1px solid var(--line); font-family:var(--mono); font-size:12.5px; color:var(--dim);
-    letter-spacing:.04em;
+    border-top:1px solid var(--line); font-size:13.5px; color:var(--dim);
   }
   .trust b{color:var(--muted); font-weight:500;}
 
@@ -184,14 +185,14 @@
   .passo{position:relative; padding-top:44px;}
   /* a linha que liga um nó ao próximo */
   .passo::before{
-    content:""; position:absolute; top:15px; left:32px; right:-28px; height:1px;
+    content:""; position:absolute; top:13px; left:54px; right:-28px; height:1px;
     background:linear-gradient(90deg, var(--xt-line), rgba(255,255,255,.06));
   }
   .passo:last-child::before{display:none;}
   .passo-n{
-    position:absolute; top:0; left:0; width:32px; height:32px; border-radius:50%;
-    display:grid; place-items:center; font-family:var(--mono); font-size:12px; font-weight:700;
-    color:var(--xt); background:var(--xt-soft); border:1px solid var(--xt-line);
+    position:absolute; top:-10px; left:0; font-family:var(--display); font-size:34px;
+    font-weight:400; line-height:1; color:var(--xt); opacity:.85;
+    font-variant-numeric:lining-nums; font-variation-settings:"SOFT" 24,"WONK" 1,"opsz" 110;
   }
   .passo h3{margin:0 0 8px; font-size:17.5px; font-weight:680; letter-spacing:-.01em;}
   .passo p{margin:0; color:var(--muted); font-size:14.5px; line-height:1.62;}
@@ -249,8 +250,8 @@
   .p-mark svg{display:block;}
   .p-name{font-size:22px; font-weight:780; letter-spacing:-.01em;}
   .p-tag{
-    margin-left:auto; font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
-    color:var(--muted); border:1px solid var(--line-2); border-radius:999px; padding:5px 11px;
+    margin-left:auto; font-size:12px; letter-spacing:.01em; font-weight:600;
+    color:var(--muted); border:1px solid var(--line-2); border-radius:999px; padding:5px 12px;
     display:inline-flex; align-items:center; gap:7px;
   }
   .p-tag::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--brand);}
@@ -305,14 +306,14 @@
   footer{padding:56px 0 46px; background:transparent;}
   .foot-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:40px;}
   .foot-brand p{color:var(--muted); font-size:14px; max-width:34ch; margin:16px 0 0;}
-  .foot-col h4{font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--dim); margin:0 0 16px; font-weight:600;}
+  .foot-col h4{font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--dim); margin:0 0 16px; font-weight:600;}
   .foot-col a, .foot-col p{display:block; color:var(--muted); font-size:14.5px; margin:0 0 11px; transition:color .18s;}
   .foot-col a:hover{color:var(--accent-2);}
   .legal{
     margin-top:44px; padding-top:26px; border-top:1px solid var(--line);
     display:flex; flex-wrap:wrap; gap:8px 24px; align-items:center; justify-content:center;
     text-align:center;
-    font-family:var(--mono); font-size:12px; color:var(--dim); letter-spacing:.02em;
+    font-size:13.5px; color:var(--dim);
   }
   .legal .cnpj{color:var(--muted);}
 
@@ -324,22 +325,9 @@
   .js .rv{opacity:0; transform:translateY(18px); transition:opacity .7s cubic-bezier(.22,.61,.36,1), transform .7s cubic-bezier(.22,.61,.36,1);}
   .js .rv.on{opacity:1; transform:none;}
 
-  /* ---------- linha de verticais no hero ---------- */
-  .hero-verticais{
-    display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
-    gap:10px 14px; margin:38px auto 0;
-  }
-  .vert{
-    font-family:var(--mono); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase;
-    color:var(--muted); border:1px solid var(--line); border-radius:100px; padding:7px 15px;
-    background:rgba(255,255,255,.02); transition:color .2s, border-color .2s;
-  }
-  .vert:hover{color:var(--text); border-color:var(--line-2);}
   .hero-nota{
-    margin:20px auto 0; font-family:var(--mono); font-size:12px; letter-spacing:.06em;
-    color:var(--dim);
+    margin:30px auto 0; font-size:15px; color:var(--dim); letter-spacing:.005em;
   }
-  .hero-nota b{color:var(--xt); font-weight:600;}
 
   /* ---------- faixa de capacidades ----------
      Ocupa o lugar da "parede de logos" das agencias, mas com o que a casa
@@ -368,15 +356,20 @@
     display:flex; flex-direction:column;}
   .eco-item:hover{background:var(--ink-2);}
   .eco-n{
-    font-family:var(--mono); font-size:11.5px; letter-spacing:.18em; text-transform:uppercase;
-    color:var(--dim); display:block; margin-bottom:22px;
+    display:flex; align-items:baseline; gap:10px; margin-bottom:20px;
+    font-size:13px; font-weight:600; color:var(--dim); letter-spacing:.01em;
+  }
+  .eco-n i{
+    font-family:var(--display); font-style:normal; font-size:27px; font-weight:400; line-height:1;
+    color:var(--xt); opacity:.8; font-variant-numeric:lining-nums;
+    font-variation-settings:"SOFT" 24,"WONK" 1,"opsz" 110;
   }
   .eco-item h3{font-size:19px; font-weight:600; margin:0 0 9px; letter-spacing:-.012em;}
   .eco-item p{margin:0; color:var(--muted); font-size:14.5px; line-height:1.62;}
   .eco-status{
     display:inline-flex; align-items:center; gap:7px; margin-top:auto; padding-top:18px;
     align-self:flex-start;
-    font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--dim);
+    font-size:12.5px; letter-spacing:.01em; font-weight:600; color:var(--dim);
   }
   .eco-status::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--dim);}
   .eco-status.vivo{color:var(--mint);}
@@ -390,10 +383,10 @@
   /* ---------- entrega dentro do passo do metodo ---------- */
   .passo-entrega{
     margin-top:16px; padding-top:14px; border-top:1px solid var(--line);
-    font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--dim);
+    font-size:12.5px; color:var(--dim); font-weight:600;
   }
-  .passo-entrega b{display:block; margin-top:5px; font-family:var(--sans); font-size:14px; letter-spacing:0;
-    text-transform:none; color:var(--accent-2); font-weight:500; line-height:1.5;}
+  .passo-entrega b{display:block; margin-top:5px; font-size:14.5px;
+    color:var(--accent-2); font-weight:500; line-height:1.5;}
 
   /* ---------- responsivo ---------- */
 
@@ -460,9 +453,7 @@
     .stat .n{font-size:26px;}
     .nav-in{height:62px; gap:12px;}
     .btn{padding:10px 16px; font-size:14px;}
-    .hero-verticais{gap:8px 10px; margin-top:30px;}
-    .vert{font-size:10.5px; padding:6px 12px; letter-spacing:.12em;}
-    .hero-nota{margin-top:16px; font-size:11.5px;}
+    .hero-nota{margin-top:22px; font-size:14px;}
   }
 
   /* celular pequeno (≤ 400px) */
@@ -524,18 +515,13 @@
     <span class="mancha a"></span>
     <span class="mancha b"></span>
     <span class="mancha c"></span>
+    <canvas class="malha" id="malha"></canvas>
     <span class="grao"></span>
   </div>
   <div class="wrap">
     <h1>Construímos produtos digitais que as pessoas usam <em>todo dia</em>.</h1>
     <p class="lead">A XTHUB é uma empresa brasileira de tecnologia. Criamos produtos digitais, plataformas, aplicativos e inteligência artificial. Dos nossos próprios aos que construímos para clientes.</p>
-    <div class="hero-verticais">
-      <span class="vert">Fintech</span>
-      <span class="vert">Esportes</span>
-      <span class="vert">Mercado financeiro</span>
-      <span class="vert">Música</span>
-    </div>
-    <p class="hero-nota"><b>4 produtos próprios</b> em 4 mercados, construídos dentro de casa.</p>
+    <p class="hero-nota">Quatro produtos próprios, em quatro mercados, construídos dentro de casa.</p>
   </div>
 </header>
 
@@ -733,25 +719,25 @@
     </div>
     <div class="eco">
       <div class="eco-item rv">
-        <span class="eco-n">01 / Fintech</span>
+        <span class="eco-n"><i>01</i>Fintech</span>
         <h3>Pagamentos e cripto</h3>
         <p>Wallet, conversão de moeda e liquidação no Pix. O terreno mais duro que existe: dinheiro de verdade, em tempo real, sem margem para erro.</p>
         <span class="eco-status vivo">No ar</span>
       </div>
       <div class="eco-item rv">
-        <span class="eco-n">02 / Esportes</span>
+        <span class="eco-n"><i>02</i>Esportes</span>
         <h3>Dados e IA aplicada</h3>
         <p>Modelos treinados em mais de um milhão de partidas, servindo probabilidade em tempo real dentro do app. IA que responde em segundos, não em relatório.</p>
         <span class="eco-status vivo">No ar</span>
       </div>
       <div class="eco-item rv">
-        <span class="eco-n">03 / Mercado financeiro</span>
+        <span class="eco-n"><i>03</i>Mercado financeiro</span>
         <h3>Trading automatizado</h3>
         <p>Motor de decisão com gestão de risco no centro, rodando sozinho e sem parar. Backtest antes, dinheiro depois.</p>
         <span class="eco-status">Em desenvolvimento</span>
       </div>
       <div class="eco-item rv">
-        <span class="eco-n">04 / Música</span>
+        <span class="eco-n"><i>04</i>Música</span>
         <h3>Criação e distribuição</h3>
         <p>Plataforma de IA para artistas ganharem alcance. Conteúdo, audiência e métrica no mesmo lugar.</p>
         <span class="eco-status">Em desenvolvimento</span>
@@ -1027,6 +1013,76 @@
     var t; window.addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(montar, 180); });
   })();
 
+
+  // Malha de pontos do hero: um campo de interferência. Cada ponto responde à
+  // soma de uma onda que sai do centro com duas ondas cruzadas, então o
+  // desenho nunca se repete igual e o movimento parece cálculo, não enfeite.
+  (function(){
+    var cv = document.getElementById('malha'); if(!cv) return;
+    var ctx = cv.getContext('2d', {alpha:true}); if(!ctx) return;
+    var reduz = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var ESP = 30, pts = [], w = 0, h = 0, raf = 0, t0 = 0;
+
+    function medir(){
+      var r = cv.getBoundingClientRect();
+      if(!r.width || !r.height) return false;
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = r.width; h = r.height;
+      cv.width  = Math.round(w * dpr);
+      cv.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      // telas estreitas ganham malha mais larga: menos pontos, mesmo desenho
+      var esp = w < 600 ? 26 : ESP;
+      pts.length = 0;
+      for(var y = esp/2; y < h; y += esp){
+        for(var x = esp/2; x < w; x += esp){ pts.push(x, y); }
+      }
+      return true;
+    }
+
+    function pintar(t){
+      ctx.clearRect(0, 0, w, h);
+      var cx = w * 0.5, cy = h * 0.40;
+      for(var i = 0; i < pts.length; i += 2){
+        var x = pts[i], y = pts[i+1];
+        var dx = x - cx, dy = y - cy;
+        var d = Math.sqrt(dx*dx + dy*dy);
+        var v = Math.sin(d * 0.013 - t * 0.0019)
+              + Math.sin(x * 0.0075 + t * 0.00105)
+              + Math.sin(y * 0.0105 - t * 0.00145);
+        v = (v + 3) / 6;                       // normaliza para 0..1
+        var f = v * v;                         // realca as cristas
+        var lado = 1.3 + f * 2.0;
+        ctx.fillStyle = 'rgba(158,186,255,' + (0.085 + f * 0.34).toFixed(3) + ')';
+        ctx.fillRect(x - lado/2, y - lado/2, lado, lado);
+      }
+    }
+
+    function quadro(ts){
+      if(!t0) t0 = ts;
+      pintar(ts - t0);
+      raf = requestAnimationFrame(quadro);
+    }
+    function tocar(){
+      if(raf || reduz) return;
+      raf = requestAnimationFrame(quadro);
+    }
+    function parar(){ if(raf){ cancelAnimationFrame(raf); raf = 0; } }
+
+    if(!medir()) return;
+    if(reduz){ pintar(0); }           // sem movimento, mas a malha existe
+    else tocar();
+
+    // nada de desenhar para aba que ninguem esta vendo
+    document.addEventListener('visibilitychange', function(){
+      if(document.visibilityState === 'visible') tocar(); else parar();
+    });
+    var tmr;
+    window.addEventListener('resize', function(){
+      clearTimeout(tmr);
+      tmr = setTimeout(function(){ if(medir() && reduz) pintar(0); }, 180);
+    });
+  })();
 
   // Entrada por scroll. A classe .js só é ligada aqui: se o JS não rodar, o
   // conteúdo nunca fica invisível.
