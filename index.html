@@ -173,6 +173,7 @@
   section{position:relative;}
   .band{padding:96px 0; border-top:1px solid var(--line);}
   .sec-head{margin-inline:auto; text-align:center;}
+  .sec-head .sobrancelha{margin-bottom:16px;}
   /* medida própria: o título cabe numa linha; o parágrafo mantém a medida de leitura */
   .sec-head h2{font-size:clamp(28px,3.7vw,40px); letter-spacing:-.003em; font-weight:470; margin:0 auto; max-width:36ch; text-wrap:balance;}
   .sec-head p{color:var(--muted); margin:14px auto 0; font-size:16.5px; max-width:60ch; text-wrap:pretty;}
@@ -211,6 +212,17 @@
 
   /* ---------- produtos ---------- */
   .prod-head{display:flex; justify-content:center; align-items:flex-end; gap:24px;}
+  /* sobrancelha com risco a esquerda e regua fechando o cabecalho */
+  .sobrancelha{
+    display:inline-flex; align-items:center; gap:12px; margin-bottom:18px;
+    font-size:12.5px; font-weight:600; letter-spacing:.055em; text-transform:uppercase;
+    color:var(--xt);
+  }
+  .sobrancelha::before{content:""; width:26px; height:1px; background:var(--xt); opacity:.75;}
+  .sec-regua{
+    height:1px; margin:38px 0 0; border:0;
+    background:linear-gradient(90deg, var(--xt) 0%, var(--xt-line) 42%, rgba(255,255,255,.05) 100%);
+  }
   .prod-arrows{display:flex; gap:10px; flex:none;}
   .parrow{width:44px; height:44px; border-radius:50%; border:1px solid var(--line-2); background:transparent; color:var(--text); font-size:20px; line-height:1; cursor:pointer; display:grid; place-items:center; transition:border-color .18s, background .18s, opacity .18s;}
   .parrow:hover{border-color:var(--accent); background:rgba(255,255,255,.05);}
@@ -221,10 +233,10 @@
   .products-track{display:flex; width:max-content; animation:prodspin var(--spin-t,22s) linear infinite; will-change:transform;}
   .products:hover .products-track{animation-play-state:paused;}
   @keyframes prodspin{from{transform:translate3d(0,0,0)} to{transform:translate3d(calc(-1 * var(--spin-w,50%)),0,0)}}
-  .product{flex:0 0 440px; margin-right:20px;}
+  .product{flex:0 0 400px; margin-right:22px; min-height:352px;}
   .product{
     position:relative; overflow:hidden; border:1px solid var(--line-2); border-radius:22px;
-    padding:24px 26px; background:var(--ink-2); transition:border-color .2s, transform .2s;
+    padding:30px 30px 28px; background:var(--ink-2); transition:border-color .2s, transform .2s;
     display:flex; flex-direction:column;
     --brand:var(--mint); --brand-soft:rgba(61,199,158,.20);
   }
@@ -243,7 +255,7 @@
   .product:hover::before{opacity:1;}
   .product:hover{transform:translateY(-4px); border-color:var(--brand);}
   /* mini-visual: a "cara" do que cada produto faz */
-  .p-viz{margin-top:14px; position:relative; z-index:1;}
+  .p-viz{margin-top:auto; padding-top:22px; position:relative; z-index:1;}
   .p-viz svg{display:block; width:100%; height:36px; overflow:visible;}
   .p-top{display:flex; align-items:center; gap:13px; position:relative; z-index:1;}
   .p-mark{width:44px; height:44px; border-radius:12px; display:grid; place-items:center; flex:none;}
@@ -256,7 +268,7 @@
   }
   .p-tag::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--brand);}
   .product p{color:var(--muted); font-size:15px; margin:14px 0 0; position:relative; z-index:1;}
-  .p-foot{margin-top:auto; padding-top:16px; position:relative; z-index:1;}
+  .p-foot{margin-top:0; padding-top:22px; position:relative; z-index:1;}
   .p-link{font-weight:600; font-size:14.5px; color:var(--text); display:inline-flex; align-items:center; gap:8px; transition:gap .2s;}
   .p-link:hover{gap:13px;}
 
@@ -334,16 +346,27 @@
      sabe fazer de verdade, em vez de marca emprestada. */
   .faixa{
     border-top:1px solid var(--line); border-bottom:1px solid var(--line);
-    padding:22px 0; overflow:hidden; background:var(--ink-2);
+    padding:56px 0 60px; overflow:hidden; background:var(--ink-2);
+  }
+  .faixa-titulo{
+    text-align:center; margin:0 auto 40px; padding:0 var(--gutter);
+    font-size:clamp(21px,2.5vw,27px); font-weight:450; letter-spacing:-.004em;
+    color:var(--accent-2);
+  }
+  .faixa-corpo{
+    overflow:hidden;
+    -webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+            mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
   }
   .faixa-in{display:flex; width:max-content; animation:faixaspin var(--faixa-t,34s) linear infinite; will-change:transform;}
   .faixa:hover .faixa-in{animation-play-state:paused;}
   @keyframes faixaspin{from{transform:translate3d(0,0,0)} to{transform:translate3d(calc(-1 * var(--faixa-w,50%)),0,0)}}
   .cap{
-    display:inline-flex; align-items:center; gap:12px; padding:0 26px; flex:none;
-    font-size:14.5px; color:var(--muted); white-space:nowrap; font-weight:500;
+    display:inline-flex; align-items:center; gap:16px; padding:0 34px; flex:none;
+    font-size:19px; color:var(--accent-2); white-space:nowrap; font-weight:500;
+    letter-spacing:-.008em;
   }
-  .cap::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--xt); flex:none; opacity:.75;}
+  .cap::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--xt); flex:none; opacity:.8;}
 
   /* ---------- ecossistema ---------- */
   .eco{
@@ -420,7 +443,7 @@
     .nav-links a:not(.btn){display:none;}
     .nav-links{gap:14px;}
     .areas{grid-template-columns:1fr; gap:14px; margin-top:38px;}
-    .product{flex:0 0 82vw; max-width:420px; margin-right:16px; padding:22px 24px;}
+    .product{flex:0 0 82vw; max-width:420px; margin-right:16px; padding:26px 24px; min-height:326px;}
     .prod-arrows{display:none;}
     .prod-head{flex-direction:column; align-items:center; gap:4px;}
     .about-grid{grid-template-columns:1fr; gap:34px;}
@@ -434,8 +457,10 @@
     .eco{grid-template-columns:1fr; margin-top:38px;}
     .eco-item{padding:26px 22px 28px;}
     .eco-n{margin-bottom:16px;}
-    .cap{font-size:13.5px; padding:0 18px;}
-    .faixa{padding:18px 0;}
+    .cap{font-size:16px; padding:0 22px; gap:12px;}
+    .faixa{padding:44px 0 46px;}
+    .faixa-titulo{margin-bottom:28px;}
+    .sec-regua{margin-top:28px;}
   }
 
   /* celular comum (≤ 560px) */
@@ -447,7 +472,7 @@
     .form-acoes{flex-direction:column; align-items:stretch; gap:12px;}
     .form-acoes .btn{justify-content:center;}
     .form-alt{text-align:center;}
-    .product{flex:0 0 86vw; padding:20px 20px;}
+    .product{flex:0 0 86vw; padding:24px 22px; min-height:0;}
     .area{padding:22px 20px;}
     .stat{padding:18px 20px;}
     .stat .n{font-size:26px;}
@@ -528,6 +553,8 @@
 <!-- Faixa de capacidades: no lugar da parede de logos de cliente, o que a casa
      sabe fazer. Nada aqui é marca emprestada. -->
 <div class="faixa" aria-label="O que construímos">
+  <h2 class="faixa-titulo">O que a XTHUB <em>constrói</em>.</h2>
+  <div class="faixa-corpo">
   <div class="faixa-in">
     <span class="cap">Aplicativos iOS e Android</span>
     <span class="cap">Modelos de machine learning em produção</span>
@@ -540,12 +567,14 @@
     <span class="cap">Design de produto</span>
     <span class="cap">Automação com IA</span>
   </div>
+  </div>
 </div>
 
 <section class="band" id="fazemos">
   <div class="wrap">
     <div class="sec-head rv">
-      <h2>Um hub de produtos de tecnologia.</h2>
+      <span class="sobrancelha">O que fazemos</span>
+      <h2>Um hub de <em>produtos de tecnologia</em>.</h2>
       <p>Do primeiro traço ao suporte em produção. Construímos para a XTHUB e para quem precisa tirar um produto do papel.</p>
     </div>
     <div class="areas">
@@ -572,10 +601,12 @@
   <div class="wrap">
     <div class="prod-head">
       <div class="sec-head rv">
-        <h2>Nossos produtos.</h2>
+        <span class="sobrancelha">Ecossistema</span>
+        <h2>Um ecossistema que <em>constrói negócios</em>.</h2>
         <p>Produtos próprios, desenvolvidos e operados pela XTHUB.</p>
       </div>
     </div>
+    <hr class="sec-regua">
     <div class="products">
       <div class="products-track">
       <a class="product bripi" href="https://bripi.com.br/" target="_blank" rel="noopener">
@@ -714,7 +745,8 @@
 <section class="band" id="ecossistema">
   <div class="wrap">
     <div class="sec-head rv">
-      <h2>Onde a gente já opera.</h2>
+      <span class="sobrancelha">Mercados</span>
+      <h2>Onde a gente <em>já opera</em>.</h2>
       <p>Não mostramos logo de cliente. Mostramos produto nosso no ar, em quatro mercados que exigem coisas bem diferentes um do outro.</p>
     </div>
     <div class="eco">
@@ -749,7 +781,8 @@
 <section class="band" id="metodo">
   <div class="wrap">
     <div class="sec-head rv">
-      <h2>Como a gente constrói.</h2>
+      <span class="sobrancelha">Método</span>
+      <h2>Como a gente <em>constrói</em>.</h2>
       <p>O mesmo processo que usamos nos nossos produtos, aplicado ao seu.</p>
     </div>
     <ol class="metodo">
@@ -799,7 +832,7 @@
 
 <section class="band cta-band" id="contato">
   <div class="wrap">
-    <h2>Vamos construir algo juntos.</h2>
+    <h2>Vamos construir <em>algo juntos</em>.</h2>
     <p>Tem um produto para tirar do papel? Projetos sob medida, parcerias e imprensa. Fale com a XTHUB.</p>
     <form class="form" id="form-contato" novalidate>
       <div class="form-grid">
