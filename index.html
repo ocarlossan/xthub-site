@@ -187,12 +187,35 @@
   .passo::before{
     content:""; position:absolute; top:13px; left:54px; right:-28px; height:1px;
     background:linear-gradient(90deg, var(--xt-line), rgba(255,255,255,.06));
+    transform-origin:left center;
+    animation:tracoCresce 7.2s ease-in-out infinite;
   }
   .passo:last-child::before{display:none;}
   .passo-n{
     position:absolute; top:-10px; left:0; font-family:var(--display); font-size:34px;
     font-weight:400; line-height:1; color:var(--xt); opacity:.85;
     font-variant-numeric:lining-nums; font-variation-settings:"SOFT" 24,"WONK" 1,"opsz" 110;
+    animation:noAcende 7.2s ease-in-out infinite;
+  }
+
+  /* O método se desenha do primeiro passo ao último e recomeça: a sequência
+     do processo contada pelo próprio movimento. Cada passo entra depois do
+     anterior, então a leitura acompanha a ordem. */
+  .passo:nth-child(1)::before, .passo:nth-child(1) .passo-n{animation-delay:0s;}
+  .passo:nth-child(2)::before, .passo:nth-child(2) .passo-n{animation-delay:.62s;}
+  .passo:nth-child(3)::before, .passo:nth-child(3) .passo-n{animation-delay:1.24s;}
+  .passo:nth-child(4)::before, .passo:nth-child(4) .passo-n{animation-delay:1.86s;}
+  @keyframes tracoCresce{
+    0%   {transform:scaleX(0); opacity:.2;}
+    11%  {transform:scaleX(1); opacity:1;}
+    72%  {transform:scaleX(1); opacity:1;}
+    100% {transform:scaleX(1); opacity:.3;}
+  }
+  @keyframes noAcende{
+    0%   {opacity:.22;}
+    8%   {opacity:1;}
+    72%  {opacity:1;}
+    100% {opacity:.45;}
   }
   .passo h3{margin:0 0 8px; font-size:17.5px; font-weight:680; letter-spacing:-.01em;}
   .passo p{margin:0; color:var(--muted); font-size:14.5px; line-height:1.62;}
@@ -225,10 +248,10 @@
   .products-track{display:flex; width:max-content; animation:prodspin var(--spin-t,22s) linear infinite; will-change:transform;}
   .products:hover .products-track{animation-play-state:paused;}
   @keyframes prodspin{from{transform:translate3d(0,0,0)} to{transform:translate3d(calc(-1 * var(--spin-w,50%)),0,0)}}
-  .product{flex:0 0 336px; margin-right:18px; min-height:262px;}
+  .product{flex:0 0 292px; margin-right:16px; min-height:250px;}
   .product{
     position:relative; overflow:hidden; border:1px solid var(--line-2); border-radius:22px;
-    padding:24px 24px 22px; background:var(--ink-2); transition:border-color .2s, transform .2s;
+    padding:22px 22px 20px; background:var(--ink-2); transition:border-color .2s, transform .2s;
     display:flex; flex-direction:column;
     --brand:var(--mint); --brand-soft:rgba(61,199,158,.20);
   }
@@ -250,11 +273,18 @@
   .p-viz{margin-top:auto; padding-top:18px; position:relative; z-index:1;}
   .p-viz svg{display:block; width:100%; height:36px; overflow:visible;}
   .p-top{display:flex; align-items:center; gap:11px; position:relative; z-index:1;}
-  .p-mark{width:34px; height:34px; border-radius:10px; display:grid; place-items:center; flex:none; overflow:hidden;}
+  /* Logo em cor única. As marcas nascem coloridas, mas aqui elas viram uma
+     coisa só, para o card não virar arco-íris. A cor de cada produto continua
+     viva na borda, no brilho e no mini-gráfico. */
+  .p-mark{
+    width:32px; height:32px; border-radius:9px; display:grid; place-items:center; flex:none;
+    overflow:hidden; background:rgba(255,255,255,.07); border:1px solid var(--line);
+  }
+  .p-mark svg{filter:grayscale(1) brightness(2.4) contrast(.55);}
   .p-mark svg{display:block; width:100%; height:100%; box-sizing:border-box;}
   /* glifo sobre fundo do CSS precisa de folga; ladrilho ja desenhado no SVG, nao */
   .p-mark.glifo svg{padding:7px;}
-  .p-name{font-size:19px; font-weight:750; letter-spacing:-.018em;}
+  .p-name{font-size:18px; font-weight:750; letter-spacing:-.018em;}
   .p-tag{
     margin-left:auto; font-size:11px; letter-spacing:.02em; font-weight:600;
     color:var(--muted); border:1px solid var(--line-2); border-radius:999px; padding:4px 10px;
@@ -356,14 +386,15 @@
      Fica dessaturado em repouso e ganha cor quando o mouse chega. */
   .logo-emp{
     display:inline-flex; align-items:center; gap:15px; padding:0 42px; flex:none;
-    white-space:nowrap; opacity:.62; filter:grayscale(.85);
-    transition:opacity .25s, filter .25s;
+    white-space:nowrap; opacity:.72; transition:opacity .25s;
   }
-  .logo-emp:hover{opacity:1; filter:grayscale(0);}
+  .logo-emp:hover{opacity:1;}
   .le-mark{
     width:52px; height:52px; border-radius:14px; flex:none;
     display:grid; place-items:center; padding:11px; overflow:hidden;
+    background:rgba(255,255,255,.07); border:1px solid var(--line);
   }
+  .le-mark svg{filter:grayscale(1) brightness(2.4) contrast(.55);}
   .le-mark svg{width:100%; height:100%; display:block;}
   .le-mark.glifo{padding:11px;}
   .le-mark:not(.glifo){padding:0;}
@@ -519,13 +550,13 @@
   <div class="faixa-corpo">
   <div class="faixa-in">
     <a class="logo-emp" href="https://bripi.com.br/" target="_blank" rel="noopener">
-      <span class="le-mark glifo" style="background:linear-gradient(145deg,#3DC79E,#2C9C83)">
+      <span class="le-mark glifo">
         <svg viewBox="0 0 100 100" aria-hidden="true"><rect x="27" y="18" width="14" height="64" rx="7" fill="#06251B"/><path fill="#06251B" fill-rule="evenodd" d="M53 38a22 22 0 1 0 0 44 22 22 0 0 0 0-44Zm0 13a9 9 0 1 1 0 18 9 9 0 0 1 0-18Z"/></svg>
       </span>
       <span class="le-nome">Bripi</span>
     </a>
     <a class="logo-emp" href="https://sharpai.pro" target="_blank" rel="noopener">
-      <span class="le-mark glifo" style="background:#0E6E4E">
+      <span class="le-mark glifo">
         <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" aria-hidden="true">
           <path d="M6 14.5 12 9 18 14.5" stroke="#fff"/>
           <path d="M6 18.6 12 13.1 18 18.6" stroke="rgba(255,255,255,.5)"/>
@@ -534,7 +565,7 @@
       <span class="le-nome">SharpAI</span>
     </a>
     <span class="logo-emp">
-      <span class="le-mark" style="background:transparent; padding:0">
+      <span class="le-mark">
         <svg viewBox="0 0 256 256" fill="none" aria-hidden="true">
           <defs>
             <linearGradient id="fxAuraxTile" x1="0" y1="0" x2="256" y2="256" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#141A26"/><stop offset="1" stop-color="#0A0D14"/></linearGradient>
@@ -551,7 +582,7 @@
       <span class="le-nome">Aurax</span>
     </span>
     <span class="logo-emp">
-      <span class="le-mark" style="background:transparent; padding:0">
+      <span class="le-mark">
         <svg viewBox="0 0 256 256" fill="none" aria-hidden="true">
           <defs>
             <linearGradient id="fxZeevaTile" x1="0" y1="0" x2="256" y2="256" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#12180D"/><stop offset="1" stop-color="#080A06"/></linearGradient>
@@ -607,7 +638,7 @@
       <div class="products-track">
       <a class="product bripi" href="https://bripi.com.br/" target="_blank" rel="noopener">
         <div class="p-top">
-          <span class="p-mark glifo" style="background:linear-gradient(145deg,#3DC79E,#2C9C83)">
+          <span class="p-mark glifo">
             <svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true"><rect x="27" y="18" width="14" height="64" rx="7" fill="#06251B"/><path fill="#06251B" fill-rule="evenodd" d="M53 38a22 22 0 1 0 0 44 22 22 0 0 0 0-44Zm0 13a9 9 0 1 1 0 18 9 9 0 0 1 0-18Z"/></svg>
           </span>
           <span class="p-name">Bripi</span>
@@ -628,7 +659,7 @@
       </a>
       <a class="product sharp" href="https://sharpai.pro" target="_blank" rel="noopener">
         <div class="p-top">
-          <span class="p-mark glifo" style="background:var(--sharp-deep)">
+          <span class="p-mark glifo">
             <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6">
               <path d="M6 14.5 12 9 18 14.5" stroke="#fff"/>
               <path d="M6 18.6 12 13.1 18 18.6" stroke="rgba(255,255,255,.5)"/>
@@ -652,7 +683,7 @@
       </a>
       <div class="product aurax">
         <div class="p-top">
-          <span class="p-mark" style="background:transparent">
+          <span class="p-mark">
             <svg width="44" height="44" viewBox="0 0 256 256" fill="none" aria-hidden="true">
               <defs>
                 <linearGradient id="auraxTile" x1="0" y1="0" x2="256" y2="256" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#141A26"/><stop offset="1" stop-color="#0A0D14"/></linearGradient>
@@ -686,7 +717,7 @@
       </div>
       <div class="product zeeva">
         <div class="p-top">
-          <span class="p-mark" style="background:transparent">
+          <span class="p-mark">
             <svg width="44" height="44" viewBox="0 0 256 256" fill="none" aria-hidden="true">
               <defs>
                 <linearGradient id="zeevaTile" x1="0" y1="0" x2="256" y2="256" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#12180D"/><stop offset="1" stop-color="#080A06"/></linearGradient>
