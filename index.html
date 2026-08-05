@@ -369,41 +369,6 @@
   .le-mark:not(.glifo){padding:0;}
   .le-nome{font-size:27px; font-weight:750; letter-spacing:-.022em; color:var(--text);}
 
-  /* ---------- ecossistema ---------- */
-  .eco{
-    display:grid; grid-template-columns:repeat(4,1fr); gap:1px; margin-top:54px;
-    background:var(--line); border:1px solid var(--line); border-radius:20px; overflow:hidden;
-  }
-  /* coluna flex para o selo de status encostar no rodapé: os textos têm
-     tamanhos diferentes e os selos precisam ficar na mesma linha */
-  .eco-item{background:var(--ink); padding:30px 26px 32px; transition:background .25s;
-    display:flex; flex-direction:column;}
-  .eco-item:hover{background:var(--ink-2);}
-  .eco-n{
-    display:flex; align-items:baseline; gap:10px; margin-bottom:20px;
-    font-size:13px; font-weight:600; color:var(--dim); letter-spacing:.01em;
-  }
-  .eco-n i{
-    font-family:var(--display); font-style:normal; font-size:27px; font-weight:400; line-height:1;
-    color:var(--xt); opacity:.8; font-variant-numeric:lining-nums;
-    font-variation-settings:"SOFT" 24,"WONK" 1,"opsz" 110;
-  }
-  .eco-item h3{font-size:19px; font-weight:600; margin:0 0 9px; letter-spacing:-.012em;}
-  .eco-item p{margin:0; color:var(--muted); font-size:14.5px; line-height:1.62;}
-  .eco-status{
-    display:inline-flex; align-items:center; gap:7px; margin-top:auto; padding-top:18px;
-    align-self:flex-start;
-    font-size:12.5px; letter-spacing:.01em; font-weight:600; color:var(--dim);
-  }
-  .eco-status::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--dim);}
-  .eco-status.vivo{color:var(--mint);}
-  .eco-status.vivo::before{background:var(--mint); box-shadow:0 0 0 0 rgba(61,199,158,.55); animation:pulso 2.4s ease-out infinite;}
-  @keyframes pulso{
-    0%{box-shadow:0 0 0 0 rgba(61,199,158,.5)}
-    70%{box-shadow:0 0 0 7px rgba(61,199,158,0)}
-    100%{box-shadow:0 0 0 0 rgba(61,199,158,0)}
-  }
-
   /* ---------- entrega dentro do passo do metodo ---------- */
   .passo-entrega{
     margin-top:16px; padding-top:14px; border-top:1px solid var(--line);
@@ -423,7 +388,6 @@
     .passo:last-child::before{display:none;}
     .foot-grid{grid-template-columns:1fr 1fr; gap:34px;}
     .product{flex:0 0 400px;}
-    .eco{grid-template-columns:repeat(2,1fr);}
   }
 
   /* tablet em pé: o bloco "sobre" empilha antes de virar celular */
@@ -455,9 +419,6 @@
     /* a máscara lateral come muito espaço em tela estreita */
     .products{-webkit-mask:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent);
               mask:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent);}
-    .eco{grid-template-columns:1fr; margin-top:38px;}
-    .eco-item{padding:26px 22px 28px;}
-    .eco-n{margin-bottom:16px;}
     .logo-emp{padding:0 26px; gap:12px;}
     .le-mark{width:42px; height:42px; border-radius:12px; padding:9px;}
     .le-nome{font-size:22px;}
@@ -772,41 +733,6 @@
         </div>
         <div class="p-foot"><span class="p-link" style="color:var(--muted)">Em breve</span></div>
       </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="band" id="ecossistema">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <h2>Onde a gente <em>já opera</em>.</h2>
-      <p>Não mostramos logo de cliente. Mostramos produto nosso no ar, em quatro mercados que exigem coisas bem diferentes um do outro.</p>
-    </div>
-    <div class="eco">
-      <div class="eco-item rv">
-        <span class="eco-n"><i>01</i>Fintech</span>
-        <h3>Pagamentos e cripto</h3>
-        <p>Wallet, conversão de moeda e liquidação no Pix. O terreno mais duro que existe: dinheiro de verdade, em tempo real, sem margem para erro.</p>
-        <span class="eco-status vivo">No ar</span>
-      </div>
-      <div class="eco-item rv">
-        <span class="eco-n"><i>02</i>Esportes</span>
-        <h3>Dados e IA aplicada</h3>
-        <p>Modelos treinados em mais de um milhão de partidas, servindo probabilidade em tempo real dentro do app. IA que responde em segundos, não em relatório.</p>
-        <span class="eco-status vivo">No ar</span>
-      </div>
-      <div class="eco-item rv">
-        <span class="eco-n"><i>03</i>Mercado financeiro</span>
-        <h3>Trading automatizado</h3>
-        <p>Motor de decisão com gestão de risco no centro, rodando sozinho e sem parar. Backtest antes, dinheiro depois.</p>
-        <span class="eco-status">Em desenvolvimento</span>
-      </div>
-      <div class="eco-item rv">
-        <span class="eco-n"><i>04</i>Música</span>
-        <h3>Criação e distribuição</h3>
-        <p>Plataforma de IA para artistas ganharem alcance. Conteúdo, audiência e métrica no mesmo lugar.</p>
-        <span class="eco-status">Em desenvolvimento</span>
       </div>
     </div>
   </div>
