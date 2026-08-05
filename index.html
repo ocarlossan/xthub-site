@@ -173,7 +173,6 @@
   section{position:relative;}
   .band{padding:96px 0; border-top:1px solid var(--line);}
   .sec-head{margin-inline:auto; text-align:center;}
-  .sec-head .sobrancelha{margin-bottom:16px;}
   /* medida própria: o título cabe numa linha; o parágrafo mantém a medida de leitura */
   .sec-head h2{font-size:clamp(28px,3.7vw,40px); letter-spacing:-.003em; font-weight:470; margin:0 auto; max-width:36ch; text-wrap:balance;}
   .sec-head p{color:var(--muted); margin:14px auto 0; font-size:16.5px; max-width:60ch; text-wrap:pretty;}
@@ -212,13 +211,6 @@
 
   /* ---------- produtos ---------- */
   .prod-head{display:flex; justify-content:center; align-items:flex-end; gap:24px;}
-  /* sobrancelha com risco a esquerda e regua fechando o cabecalho */
-  .sobrancelha{
-    display:inline-flex; align-items:center; gap:12px; margin-bottom:18px;
-    font-size:12.5px; font-weight:600; letter-spacing:.055em; text-transform:uppercase;
-    color:var(--xt);
-  }
-  .sobrancelha::before{content:""; width:26px; height:1px; background:var(--xt); opacity:.75;}
   .sec-regua{
     height:1px; margin:38px 0 0; border:0;
     background:linear-gradient(90deg, var(--xt) 0%, var(--xt-line) 42%, rgba(255,255,255,.05) 100%);
@@ -361,12 +353,20 @@
   .faixa-in{display:flex; width:max-content; animation:faixaspin var(--faixa-t,34s) linear infinite; will-change:transform;}
   .faixa:hover .faixa-in{animation-play-state:paused;}
   @keyframes faixaspin{from{transform:translate3d(0,0,0)} to{transform:translate3d(calc(-1 * var(--faixa-w,50%)),0,0)}}
-  .cap{
-    display:inline-flex; align-items:center; gap:16px; padding:0 34px; flex:none;
-    font-size:19px; color:var(--accent-2); white-space:nowrap; font-weight:500;
-    letter-spacing:-.008em;
+  /* travessao de logo: marca + nome, do jeito que uma logo se apresenta.
+     Fica dessaturado em repouso e ganha cor quando o mouse chega. */
+  .logo-emp{
+    display:inline-flex; align-items:center; gap:15px; padding:0 42px; flex:none;
+    white-space:nowrap; opacity:.62; filter:grayscale(.85);
+    transition:opacity .25s, filter .25s;
   }
-  .cap::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--xt); flex:none; opacity:.8;}
+  .logo-emp:hover{opacity:1; filter:grayscale(0);}
+  .le-mark{
+    width:52px; height:52px; border-radius:14px; flex:none;
+    display:grid; place-items:center; padding:11px; overflow:hidden;
+  }
+  .le-mark svg{width:100%; height:100%; display:block;}
+  .le-nome{font-size:27px; font-weight:750; letter-spacing:-.022em; color:var(--text);}
 
   /* ---------- ecossistema ---------- */
   .eco{
@@ -457,7 +457,9 @@
     .eco{grid-template-columns:1fr; margin-top:38px;}
     .eco-item{padding:26px 22px 28px;}
     .eco-n{margin-bottom:16px;}
-    .cap{font-size:16px; padding:0 22px; gap:12px;}
+    .logo-emp{padding:0 26px; gap:12px;}
+    .le-mark{width:42px; height:42px; border-radius:12px; padding:9px;}
+    .le-nome{font-size:22px;}
     .faixa{padding:44px 0 46px;}
     .faixa-titulo{margin-bottom:28px;}
     .sec-regua{margin-top:28px;}
@@ -552,20 +554,56 @@
 
 <!-- Faixa de capacidades: no lugar da parede de logos de cliente, o que a casa
      sabe fazer. Nada aqui é marca emprestada. -->
-<div class="faixa" aria-label="O que construímos">
-  <h2 class="faixa-titulo">O que a XTHUB <em>constrói</em>.</h2>
+<div class="faixa" aria-label="Empresas do grupo XTHUB">
+  <h2 class="faixa-titulo">Empresas que a XTHUB <em>constrói e opera</em>.</h2>
   <div class="faixa-corpo">
   <div class="faixa-in">
-    <span class="cap">Aplicativos iOS e Android</span>
-    <span class="cap">Modelos de machine learning em produção</span>
-    <span class="cap">Pagamentos e Pix</span>
-    <span class="cap">Dados em tempo real</span>
-    <span class="cap">Plataformas web e painéis</span>
-    <span class="cap">Carteiras e ativos digitais</span>
-    <span class="cap">APIs e integrações</span>
-    <span class="cap">Infraestrutura e deploy contínuo</span>
-    <span class="cap">Design de produto</span>
-    <span class="cap">Automação com IA</span>
+    <a class="logo-emp" href="https://bripi.com.br/" target="_blank" rel="noopener">
+      <span class="le-mark" style="background:linear-gradient(145deg,#3DC79E,#2C9C83)">
+        <svg viewBox="0 0 100 100" aria-hidden="true"><rect x="27" y="18" width="14" height="64" rx="7" fill="#06251B"/><path fill="#06251B" fill-rule="evenodd" d="M53 38a22 22 0 1 0 0 44 22 22 0 0 0 0-44Zm0 13a9 9 0 1 1 0 18 9 9 0 0 1 0-18Z"/></svg>
+      </span>
+      <span class="le-nome">Bripi</span>
+    </a>
+    <a class="logo-emp" href="https://sharpai.pro" target="_blank" rel="noopener">
+      <span class="le-mark" style="background:#0E6E4E">
+        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" aria-hidden="true">
+          <path d="M6 14.5 12 9 18 14.5" stroke="#fff"/>
+          <path d="M6 18.6 12 13.1 18 18.6" stroke="rgba(255,255,255,.5)"/>
+        </svg>
+      </span>
+      <span class="le-nome">SharpAI</span>
+    </a>
+    <span class="logo-emp">
+      <span class="le-mark" style="background:transparent; padding:0">
+        <svg viewBox="0 0 256 256" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="fxAuraxTile" x1="0" y1="0" x2="256" y2="256" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#141A26"/><stop offset="1" stop-color="#0A0D14"/></linearGradient>
+            <linearGradient id="fxAuraxGold" x1="70" y1="52" x2="188" y2="204" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FCE7A6"/><stop offset="0.45" stop-color="#F5C242"/><stop offset="1" stop-color="#E0940A"/></linearGradient>
+          </defs>
+          <rect width="256" height="256" rx="58" fill="url(#fxAuraxTile)"/>
+          <rect x="1.5" y="1.5" width="253" height="253" rx="56.5" fill="none" stroke="#F5C242" stroke-opacity="0.16" stroke-width="3"/>
+          <path d="M128 54 L188 200" stroke="url(#fxAuraxGold)" stroke-width="24" stroke-linecap="round"/>
+          <path d="M128 54 L68 200" stroke="url(#fxAuraxGold)" stroke-width="24" stroke-linecap="round"/>
+          <path d="M96 150 L160 150" stroke="url(#fxAuraxGold)" stroke-width="20" stroke-linecap="round"/>
+          <circle cx="128" cy="54" r="9" fill="#FFF4D6"/>
+        </svg>
+      </span>
+      <span class="le-nome">Aurax</span>
+    </span>
+    <span class="logo-emp">
+      <span class="le-mark" style="background:transparent; padding:0">
+        <svg viewBox="0 0 256 256" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="fxZeevaTile" x1="0" y1="0" x2="256" y2="256" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#12180D"/><stop offset="1" stop-color="#080A06"/></linearGradient>
+            <linearGradient id="fxZeevaLime" x1="72" y1="66" x2="184" y2="192" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#D9F99D"/><stop offset="0.5" stop-color="#A3E635"/><stop offset="1" stop-color="#65A30D"/></linearGradient>
+          </defs>
+          <rect width="256" height="256" rx="58" fill="url(#fxZeevaTile)"/>
+          <rect x="1.5" y="1.5" width="253" height="253" rx="56.5" fill="none" stroke="#A3E635" stroke-opacity="0.18" stroke-width="3"/>
+          <path d="M80 78 H176 L80 178 H176" stroke="url(#fxZeevaLime)" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </span>
+      <span class="le-nome">Zeeva</span>
+    </span>
   </div>
   </div>
 </div>
@@ -573,7 +611,6 @@
 <section class="band" id="fazemos">
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="sobrancelha">O que fazemos</span>
       <h2>Um hub de <em>produtos de tecnologia</em>.</h2>
       <p>Do primeiro traço ao suporte em produção. Construímos para a XTHUB e para quem precisa tirar um produto do papel.</p>
     </div>
@@ -601,7 +638,6 @@
   <div class="wrap">
     <div class="prod-head">
       <div class="sec-head rv">
-        <span class="sobrancelha">Ecossistema</span>
         <h2>Um ecossistema que <em>constrói negócios</em>.</h2>
         <p>Produtos próprios, desenvolvidos e operados pela XTHUB.</p>
       </div>
@@ -745,7 +781,6 @@
 <section class="band" id="ecossistema">
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="sobrancelha">Mercados</span>
       <h2>Onde a gente <em>já opera</em>.</h2>
       <p>Não mostramos logo de cliente. Mostramos produto nosso no ar, em quatro mercados que exigem coisas bem diferentes um do outro.</p>
     </div>
@@ -781,7 +816,6 @@
 <section class="band" id="metodo">
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="sobrancelha">Método</span>
       <h2>Como a gente <em>constrói</em>.</h2>
       <p>O mesmo processo que usamos nos nossos produtos, aplicado ao seu.</p>
     </div>
@@ -1047,73 +1081,150 @@
   })();
 
 
-  // Malha de pontos do hero: um campo de interferência. Cada ponto responde à
-  // soma de uma onda que sai do centro com duas ondas cruzadas, então o
-  // desenho nunca se repete igual e o movimento parece cálculo, não enfeite.
+  // Fundo do hero: uma planta sendo construída. Sobre uma malha discreta,
+  // traçados ortogonais avançam nó a nó, acendem o caminho e depois somam ao
+  // desenho antes de sumir. A ideia é construção acontecendo, não enfeite.
   (function(){
     var cv = document.getElementById('malha'); if(!cv) return;
-    var ctx = cv.getContext('2d', {alpha:true}); if(!ctx) return;
+    var ctx = cv.getContext('2d'); if(!ctx) return;
     var reduz = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var ESP = 30, pts = [], w = 0, h = 0, raf = 0, t0 = 0;
+    var ESP = 34, cols = 0, rows = 0, w = 0, h = 0, raf = 0, ultimo = 0;
+    var obras = [], QTD = 7;
+
+    function sortear(n){ return Math.floor(Math.random() * n); }
+
+    // caminho ortogonal: anda em linha reta, vira noventa graus, anda de novo
+    function tracar(){
+      var x = sortear(cols), y = sortear(rows);
+      var pts = [[x, y]];
+      var horiz = Math.random() < 0.5;
+      var trechos = 3 + sortear(4);
+      for(var i = 0; i < trechos; i++){
+        var passo = 2 + sortear(5);
+        var dir = Math.random() < 0.5 ? 1 : -1;
+        if(horiz) x = Math.max(0, Math.min(cols - 1, x + passo * dir));
+        else      y = Math.max(0, Math.min(rows - 1, y + passo * dir));
+        pts.push([x, y]);
+        horiz = !horiz;
+      }
+      return pts;
+    }
+
+    function nova(atraso){
+      return {pts: tracar(), prog: 0, alfa: 1, fase: 'sobe', espera: atraso || 0};
+    }
 
     function medir(){
       var r = cv.getBoundingClientRect();
       if(!r.width || !r.height) return false;
       var dpr = Math.min(window.devicePixelRatio || 1, 2);
       w = r.width; h = r.height;
-      cv.width  = Math.round(w * dpr);
-      cv.height = Math.round(h * dpr);
+      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      // telas estreitas ganham malha mais larga: menos pontos, mesmo desenho
-      var esp = w < 600 ? 26 : ESP;
-      pts.length = 0;
-      for(var y = esp/2; y < h; y += esp){
-        for(var x = esp/2; x < w; x += esp){ pts.push(x, y); }
-      }
+      cols = Math.max(4, Math.floor(w / ESP));
+      rows = Math.max(4, Math.floor(h / ESP));
+      obras = [];
+      for(var i = 0; i < QTD; i++) obras.push(nova(i * 380));
       return true;
     }
 
-    function pintar(t){
+    function px(c){ return (w - (cols - 1) * ESP) / 2 + c * ESP; }
+    function py(l){ return (h - (rows - 1) * ESP) / 2 + l * ESP; }
+
+    function malha(){
+      ctx.fillStyle = 'rgba(158,186,255,.085)';
+      for(var l = 0; l < rows; l++){
+        for(var c = 0; c < cols; c++){ ctx.fillRect(px(c) - .8, py(l) - .8, 1.6, 1.6); }
+      }
+    }
+
+    function pintar(dt){
       ctx.clearRect(0, 0, w, h);
-      var cx = w * 0.5, cy = h * 0.40;
-      for(var i = 0; i < pts.length; i += 2){
-        var x = pts[i], y = pts[i+1];
-        var dx = x - cx, dy = y - cy;
-        var d = Math.sqrt(dx*dx + dy*dy);
-        var v = Math.sin(d * 0.013 - t * 0.0019)
-              + Math.sin(x * 0.0075 + t * 0.00105)
-              + Math.sin(y * 0.0105 - t * 0.00145);
-        v = (v + 3) / 6;                       // normaliza para 0..1
-        var f = v * v;                         // realca as cristas
-        var lado = 1.3 + f * 2.0;
-        ctx.fillStyle = 'rgba(158,186,255,' + (0.085 + f * 0.34).toFixed(3) + ')';
-        ctx.fillRect(x - lado/2, y - lado/2, lado, lado);
+      malha();
+      for(var i = 0; i < obras.length; i++){
+        var o = obras[i];
+        if(o.espera > 0){ o.espera -= dt; continue; }
+        if(o.fase === 'sobe'){
+          o.prog += dt * 0.0042;                       // nós por milissegundo
+          if(o.prog >= o.pts.length - 1){ o.prog = o.pts.length - 1; o.fase = 'aceso'; o.espera = 700; }
+        } else if(o.fase === 'aceso'){
+          o.fase = 'sai';
+        } else {
+          o.alfa -= dt * 0.0009;
+          if(o.alfa <= 0){ obras[i] = nova(sortear(500)); continue; }
+        }
+
+        var ate = Math.floor(o.prog), fr = o.prog - ate;
+        ctx.lineWidth = 1.4;
+        ctx.lineCap = 'square';
+        ctx.strokeStyle = 'rgba(91,138,255,' + (o.alfa * 0.42).toFixed(3) + ')';
+        ctx.beginPath();
+        ctx.moveTo(px(o.pts[0][0]), py(o.pts[0][1]));
+        for(var k = 1; k <= ate; k++) ctx.lineTo(px(o.pts[k][0]), py(o.pts[k][1]));
+        var hx, hy;
+        if(ate < o.pts.length - 1){
+          var a = o.pts[ate], b = o.pts[ate + 1];
+          hx = px(a[0]) + (px(b[0]) - px(a[0])) * fr;
+          hy = py(a[1]) + (py(b[1]) - py(a[1])) * fr;
+          ctx.lineTo(hx, hy);
+        } else { hx = px(o.pts[ate][0]); hy = py(o.pts[ate][1]); }
+        ctx.stroke();
+
+        // nós já fixados no caminho
+        ctx.fillStyle = 'rgba(122,160,255,' + (o.alfa * 0.55).toFixed(3) + ')';
+        for(var j = 0; j <= ate; j++) ctx.fillRect(px(o.pts[j][0]) - 2, py(o.pts[j][1]) - 2, 4, 4);
+
+        // ponta que está construindo
+        if(o.fase === 'sobe'){
+          ctx.fillStyle = 'rgba(190,212,255,' + (o.alfa * 0.9).toFixed(3) + ')';
+          ctx.fillRect(hx - 2.6, hy - 2.6, 5.2, 5.2);
+        }
       }
     }
 
     function quadro(ts){
-      if(!t0) t0 = ts;
-      pintar(ts - t0);
+      var dt = ultimo ? Math.min(ts - ultimo, 64) : 16;
+      ultimo = ts;
+      pintar(dt);
       raf = requestAnimationFrame(quadro);
     }
-    function tocar(){
-      if(raf || reduz) return;
-      raf = requestAnimationFrame(quadro);
-    }
+    function tocar(){ if(!raf && !reduz){ ultimo = 0; raf = requestAnimationFrame(quadro); } }
     function parar(){ if(raf){ cancelAnimationFrame(raf); raf = 0; } }
 
-    if(!medir()) return;
-    if(reduz){ pintar(0); }           // sem movimento, mas a malha existe
-    else tocar();
+    // Medir pode falhar se o layout ainda não existe (aba aberta em segundo
+    // plano, por exemplo). Nesse caso não se desiste: tenta de novo quando a
+    // página carrega, quando volta a ficar visível e quando o canvas ganha
+    // tamanho. Sem isso, uma medição ruim mataria a animação para sempre.
+    var pronto = false;
+    function iniciar(){
+      if(pronto) return true;
+      if(!medir()) return false;
+      pronto = true;
+      if(reduz){ ctx.clearRect(0, 0, w, h); malha(); }
+      else tocar();
+      return true;
+    }
+    iniciar();
+    if(!pronto){
+      window.addEventListener('load', iniciar);
+      if('ResizeObserver' in window){
+        var ro = new ResizeObserver(function(){ if(iniciar() && ro) ro.disconnect(); });
+        ro.observe(cv);
+      }
+    }
 
-    // nada de desenhar para aba que ninguem esta vendo
     document.addEventListener('visibilitychange', function(){
-      if(document.visibilityState === 'visible') tocar(); else parar();
+      if(document.visibilityState !== 'visible'){ parar(); return; }
+      if(!iniciar()) return;
+      tocar();
     });
     var tmr;
     window.addEventListener('resize', function(){
       clearTimeout(tmr);
-      tmr = setTimeout(function(){ if(medir() && reduz) pintar(0); }, 180);
+      tmr = setTimeout(function(){
+        if(!pronto){ iniciar(); return; }
+        if(medir() && reduz){ ctx.clearRect(0,0,w,h); malha(); }
+      }, 180);
     });
   })();
 
@@ -1181,6 +1292,7 @@
         base.forEach(function(el){
           var c = el.cloneNode(true);
           c.setAttribute('aria-hidden','true');
+          c.setAttribute('tabindex','-1');   // clone nao vira parada de tabulacao
           trilho.appendChild(c);
         });
       }
