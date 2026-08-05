@@ -329,9 +329,6 @@
   .js .rv{opacity:0; transform:translateY(18px); transition:opacity .7s cubic-bezier(.22,.61,.36,1), transform .7s cubic-bezier(.22,.61,.36,1);}
   .js .rv.on{opacity:1; transform:none;}
 
-  .hero-nota{
-    margin:30px auto 0; font-size:15px; color:var(--dim); letter-spacing:.005em;
-  }
 
   /* ---------- faixa de capacidades ----------
      Ocupa o lugar da "parede de logos" das agencias, mas com o que a casa
@@ -480,7 +477,6 @@
     .stat .n{font-size:26px;}
     .nav-in{height:62px; gap:12px;}
     .btn{padding:10px 16px; font-size:14px;}
-    .hero-nota{margin-top:22px; font-size:14px;}
   }
 
   /* celular pequeno (≤ 400px) */
@@ -548,7 +544,6 @@
   <div class="wrap">
     <h1>Construímos produtos digitais que as pessoas usam <em>todo dia</em>.</h1>
     <p class="lead">A XTHUB é uma empresa brasileira de tecnologia. Criamos produtos digitais, plataformas, aplicativos e inteligência artificial. Dos nossos próprios aos que construímos para clientes.</p>
-    <p class="hero-nota">Quatro produtos próprios, em quatro mercados, construídos dentro de casa.</p>
   </div>
 </header>
 
@@ -945,13 +940,11 @@
 </footer>
 
 <script>
-  // Formulário de contato. O site é estático, então a mensagem sai pronta pelo
-  // WhatsApp comercial (onde o lead realmente é visto). Sem o número preenchido
-  // abaixo, cai no email — o formulário nunca fica quebrado.
+  // Formulário de contato. O site é estático, então a entrega é feita por um
+  // serviço externo que repassa a mensagem para a caixa abaixo. Se a rede
+  // falhar, o plano B abre o email do visitante com tudo escrito.
   (function(){
     var EMAIL    = 'contato@xthub.com.br';
-    var WHATSAPP = '';                      // <<< WhatsApp da XTHUB: só números com DDI. Ex: '5511999999999'
-                                            //     Preenchido, abre o WhatsApp junto com o envio.
     // Entrega o formulário na caixa do EMAIL acima (site é estático, não tem servidor).
     var ENDPOINT = 'https://formsubmit.co/ajax/' + EMAIL;
 
@@ -1021,9 +1014,6 @@
       .then(function(){
         form.reset();
         nota.textContent = 'Recebemos sua mensagem. A gente responde no seu WhatsApp ou email em breve.';
-        if(WHATSAPP){
-          window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(texto), '_blank', 'noopener');
-        }
       })
       .catch(function(){
         nota.textContent = 'Não conseguimos enviar agora. Abrimos seu email com a mensagem pronta.';
