@@ -225,10 +225,10 @@
   .products-track{display:flex; width:max-content; animation:prodspin var(--spin-t,22s) linear infinite; will-change:transform;}
   .products:hover .products-track{animation-play-state:paused;}
   @keyframes prodspin{from{transform:translate3d(0,0,0)} to{transform:translate3d(calc(-1 * var(--spin-w,50%)),0,0)}}
-  .product{flex:0 0 400px; margin-right:22px; min-height:352px;}
+  .product{flex:0 0 336px; margin-right:18px; min-height:262px;}
   .product{
     position:relative; overflow:hidden; border:1px solid var(--line-2); border-radius:22px;
-    padding:30px 30px 28px; background:var(--ink-2); transition:border-color .2s, transform .2s;
+    padding:24px 24px 22px; background:var(--ink-2); transition:border-color .2s, transform .2s;
     display:flex; flex-direction:column;
     --brand:var(--mint); --brand-soft:rgba(61,199,158,.20);
   }
@@ -247,21 +247,23 @@
   .product:hover::before{opacity:1;}
   .product:hover{transform:translateY(-4px); border-color:var(--brand);}
   /* mini-visual: a "cara" do que cada produto faz */
-  .p-viz{margin-top:auto; padding-top:22px; position:relative; z-index:1;}
+  .p-viz{margin-top:auto; padding-top:18px; position:relative; z-index:1;}
   .p-viz svg{display:block; width:100%; height:36px; overflow:visible;}
-  .p-top{display:flex; align-items:center; gap:13px; position:relative; z-index:1;}
-  .p-mark{width:44px; height:44px; border-radius:12px; display:grid; place-items:center; flex:none;}
-  .p-mark svg{display:block;}
-  .p-name{font-size:22px; font-weight:780; letter-spacing:-.01em;}
+  .p-top{display:flex; align-items:center; gap:11px; position:relative; z-index:1;}
+  .p-mark{width:34px; height:34px; border-radius:10px; display:grid; place-items:center; flex:none; overflow:hidden;}
+  .p-mark svg{display:block; width:100%; height:100%; box-sizing:border-box;}
+  /* glifo sobre fundo do CSS precisa de folga; ladrilho ja desenhado no SVG, nao */
+  .p-mark.glifo svg{padding:7px;}
+  .p-name{font-size:19px; font-weight:750; letter-spacing:-.018em;}
   .p-tag{
-    margin-left:auto; font-size:12px; letter-spacing:.01em; font-weight:600;
-    color:var(--muted); border:1px solid var(--line-2); border-radius:999px; padding:5px 12px;
-    display:inline-flex; align-items:center; gap:7px;
+    margin-left:auto; font-size:11px; letter-spacing:.02em; font-weight:600;
+    color:var(--muted); border:1px solid var(--line-2); border-radius:999px; padding:4px 10px;
+    display:inline-flex; align-items:center; gap:6px; flex:none;
   }
-  .p-tag::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--brand);}
-  .product p{color:var(--muted); font-size:15px; margin:14px 0 0; position:relative; z-index:1;}
-  .p-foot{margin-top:0; padding-top:22px; position:relative; z-index:1;}
-  .p-link{font-weight:600; font-size:14.5px; color:var(--text); display:inline-flex; align-items:center; gap:8px; transition:gap .2s;}
+  .p-tag::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--brand); flex:none;}
+  .product p{color:var(--muted); font-size:14px; line-height:1.6; margin:14px 0 0; position:relative; z-index:1;}
+  .p-foot{margin-top:0; padding-top:16px; position:relative; z-index:1;}
+  .p-link{font-weight:600; font-size:13.5px; color:var(--text); display:inline-flex; align-items:center; gap:8px; transition:gap .2s;}
   .p-link:hover{gap:13px;}
 
   /* ---------- sobre / stats ---------- */
@@ -363,6 +365,8 @@
     display:grid; place-items:center; padding:11px; overflow:hidden;
   }
   .le-mark svg{width:100%; height:100%; display:block;}
+  .le-mark.glifo{padding:11px;}
+  .le-mark:not(.glifo){padding:0;}
   .le-nome{font-size:27px; font-weight:750; letter-spacing:-.022em; color:var(--text);}
 
   /* ---------- ecossistema ---------- */
@@ -554,13 +558,13 @@
   <div class="faixa-corpo">
   <div class="faixa-in">
     <a class="logo-emp" href="https://bripi.com.br/" target="_blank" rel="noopener">
-      <span class="le-mark" style="background:linear-gradient(145deg,#3DC79E,#2C9C83)">
+      <span class="le-mark glifo" style="background:linear-gradient(145deg,#3DC79E,#2C9C83)">
         <svg viewBox="0 0 100 100" aria-hidden="true"><rect x="27" y="18" width="14" height="64" rx="7" fill="#06251B"/><path fill="#06251B" fill-rule="evenodd" d="M53 38a22 22 0 1 0 0 44 22 22 0 0 0 0-44Zm0 13a9 9 0 1 1 0 18 9 9 0 0 1 0-18Z"/></svg>
       </span>
       <span class="le-nome">Bripi</span>
     </a>
     <a class="logo-emp" href="https://sharpai.pro" target="_blank" rel="noopener">
-      <span class="le-mark" style="background:#0E6E4E">
+      <span class="le-mark glifo" style="background:#0E6E4E">
         <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" aria-hidden="true">
           <path d="M6 14.5 12 9 18 14.5" stroke="#fff"/>
           <path d="M6 18.6 12 13.1 18 18.6" stroke="rgba(255,255,255,.5)"/>
@@ -642,7 +646,7 @@
       <div class="products-track">
       <a class="product bripi" href="https://bripi.com.br/" target="_blank" rel="noopener">
         <div class="p-top">
-          <span class="p-mark" style="background:linear-gradient(145deg,#3DC79E,#2C9C83)">
+          <span class="p-mark glifo" style="background:linear-gradient(145deg,#3DC79E,#2C9C83)">
             <svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true"><rect x="27" y="18" width="14" height="64" rx="7" fill="#06251B"/><path fill="#06251B" fill-rule="evenodd" d="M53 38a22 22 0 1 0 0 44 22 22 0 0 0 0-44Zm0 13a9 9 0 1 1 0 18 9 9 0 0 1 0-18Z"/></svg>
           </span>
           <span class="p-name">Bripi</span>
@@ -663,7 +667,7 @@
       </a>
       <a class="product sharp" href="https://sharpai.pro" target="_blank" rel="noopener">
         <div class="p-top">
-          <span class="p-mark" style="background:var(--sharp-deep)">
+          <span class="p-mark glifo" style="background:var(--sharp-deep)">
             <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6">
               <path d="M6 14.5 12 9 18 14.5" stroke="#fff"/>
               <path d="M6 18.6 12 13.1 18 18.6" stroke="rgba(255,255,255,.5)"/>
