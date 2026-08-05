@@ -393,10 +393,11 @@
     font-size:clamp(21px,2.5vw,27px); font-weight:650; letter-spacing:-.022em;
     color:var(--accent-2);
   }
+  /* A faixa nao sangra: ocupa 80% da tela e fica centrada, como no Cubos. */
   .faixa-corpo{
-    overflow:hidden;
-    -webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-            mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+    width:80%; margin-inline:auto; overflow:hidden;
+    -webkit-mask:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+            mask:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
   }
   .faixa-in{display:flex; width:max-content; animation:faixaspin var(--faixa-t,34s) linear infinite; will-change:transform;}
   .faixa:hover .faixa-in{animation-play-state:paused;}
@@ -473,6 +474,7 @@
     .le-mark{width:42px; height:42px; border-radius:12px; padding:9px;}
     .le-nome{font-size:22px;}
     .faixa{padding:44px 0 46px;}
+    .faixa-corpo{width:92%;}
     .faixa-titulo{margin-bottom:28px;}
     .sec-regua{margin-top:28px;}
   }
@@ -1199,7 +1201,8 @@
       while(trilho.children.length > base.length) trilho.removeChild(trilho.lastChild);
       var serie = medir();
       if(!serie) return;
-      var alvo = window.innerWidth + serie;
+      var visivel = (trilho.parentNode && trilho.parentNode.offsetWidth) || window.innerWidth;
+      var alvo = visivel + serie;
       var copias = Math.max(1, Math.ceil(alvo / serie));
       for(var i=0; i<copias; i++){
         base.forEach(function(el){
