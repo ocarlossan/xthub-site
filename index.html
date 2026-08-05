@@ -239,6 +239,83 @@
 
   :focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px;}
 
+  /* ---------- entrada por scroll ----------
+     O conteudo sobe de leve quando entra na tela. Sem JS o site continua
+     visivel: a classe .rv so ganha o estado escondido se o JS assumir. */
+  .js .rv{opacity:0; transform:translateY(18px); transition:opacity .7s cubic-bezier(.22,.61,.36,1), transform .7s cubic-bezier(.22,.61,.36,1);}
+  .js .rv.on{opacity:1; transform:none;}
+
+  /* ---------- linha de verticais no hero ---------- */
+  .hero-verticais{
+    display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
+    gap:10px 14px; margin:38px auto 0;
+  }
+  .vert{
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--muted); border:1px solid var(--line); border-radius:100px; padding:7px 15px;
+    background:rgba(255,255,255,.02); transition:color .2s, border-color .2s;
+  }
+  .vert:hover{color:var(--text); border-color:var(--line-2);}
+  .hero-nota{
+    margin:20px auto 0; font-family:var(--mono); font-size:12px; letter-spacing:.06em;
+    color:var(--dim);
+  }
+  .hero-nota b{color:var(--xt); font-weight:600;}
+
+  /* ---------- faixa de capacidades ----------
+     Ocupa o lugar da "parede de logos" das agencias, mas com o que a casa
+     sabe fazer de verdade, em vez de marca emprestada. */
+  .faixa{
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:22px 0; overflow:hidden; background:var(--ink-2);
+  }
+  .faixa-in{display:flex; width:max-content; animation:faixaspin var(--faixa-t,34s) linear infinite; will-change:transform;}
+  .faixa:hover .faixa-in{animation-play-state:paused;}
+  @keyframes faixaspin{from{transform:translate3d(0,0,0)} to{transform:translate3d(calc(-1 * var(--faixa-w,50%)),0,0)}}
+  .cap{
+    display:inline-flex; align-items:center; gap:12px; padding:0 26px; flex:none;
+    font-size:14.5px; color:var(--muted); white-space:nowrap; font-weight:500;
+  }
+  .cap::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--xt); flex:none; opacity:.75;}
+
+  /* ---------- ecossistema ---------- */
+  .eco{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px; margin-top:54px;
+    background:var(--line); border:1px solid var(--line); border-radius:20px; overflow:hidden;
+  }
+  /* coluna flex para o selo de status encostar no rodapé: os textos têm
+     tamanhos diferentes e os selos precisam ficar na mesma linha */
+  .eco-item{background:var(--ink); padding:30px 26px 32px; transition:background .25s;
+    display:flex; flex-direction:column;}
+  .eco-item:hover{background:var(--ink-2);}
+  .eco-n{
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--dim); display:block; margin-bottom:22px;
+  }
+  .eco-item h3{font-size:19px; font-weight:600; margin:0 0 9px; letter-spacing:-.012em;}
+  .eco-item p{margin:0; color:var(--muted); font-size:14.5px; line-height:1.62;}
+  .eco-status{
+    display:inline-flex; align-items:center; gap:7px; margin-top:auto; padding-top:18px;
+    align-self:flex-start;
+    font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--dim);
+  }
+  .eco-status::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--dim);}
+  .eco-status.vivo{color:var(--mint);}
+  .eco-status.vivo::before{background:var(--mint); box-shadow:0 0 0 0 rgba(61,199,158,.55); animation:pulso 2.4s ease-out infinite;}
+  @keyframes pulso{
+    0%{box-shadow:0 0 0 0 rgba(61,199,158,.5)}
+    70%{box-shadow:0 0 0 7px rgba(61,199,158,0)}
+    100%{box-shadow:0 0 0 0 rgba(61,199,158,0)}
+  }
+
+  /* ---------- entrega dentro do passo do metodo ---------- */
+  .passo-entrega{
+    margin-top:16px; padding-top:14px; border-top:1px solid var(--line);
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--dim);
+  }
+  .passo-entrega b{display:block; margin-top:5px; font-family:var(--sans); font-size:14px; letter-spacing:0;
+    text-transform:none; color:var(--accent-2); font-weight:500; line-height:1.5;}
+
   /* ---------- responsivo ---------- */
 
   /* laptop pequeno / tablet deitado: 3 colunas começam a apertar */
@@ -250,6 +327,7 @@
     .passo:last-child::before{display:none;}
     .foot-grid{grid-template-columns:1fr 1fr; gap:34px;}
     .product{flex:0 0 400px;}
+    .eco{grid-template-columns:repeat(2,1fr);}
   }
 
   /* tablet em pé: o bloco "sobre" empilha antes de virar celular */
@@ -281,6 +359,11 @@
     /* a máscara lateral come muito espaço em tela estreita */
     .products{-webkit-mask:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent);
               mask:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent);}
+    .eco{grid-template-columns:1fr; margin-top:38px;}
+    .eco-item{padding:26px 22px 28px;}
+    .eco-n{margin-bottom:16px;}
+    .cap{font-size:13.5px; padding:0 18px;}
+    .faixa{padding:18px 0;}
   }
 
   /* celular comum (≤ 560px) */
@@ -298,6 +381,9 @@
     .stat .n{font-size:26px;}
     .nav-in{height:62px; gap:12px;}
     .btn{padding:10px 16px; font-size:14px;}
+    .hero-verticais{gap:8px 10px; margin-top:30px;}
+    .vert{font-size:10.5px; padding:6px 12px; letter-spacing:.12em;}
+    .hero-nota{margin-top:16px; font-size:11.5px;}
   }
 
   /* celular pequeno (≤ 400px) */
@@ -308,8 +394,21 @@
     .product{flex:0 0 88vw;}
     .stat{flex-direction:column; align-items:flex-start; gap:4px;}
   }
-  @media (prefers-reduced-motion:reduce){ .products-track{animation:none;} .products{overflow-x:auto; -webkit-mask:none; mask:none;} }
+  @media (prefers-reduced-motion:reduce){
+    .products-track,.faixa-in{animation:none;}
+    .products{overflow-x:auto; -webkit-mask:none; mask:none;}
+    .faixa{overflow-x:auto;}
+    .js .rv{opacity:1; transform:none;}
+  }
 </style>
+
+<script>
+  // Marca que o JS está vivo antes da primeira pintura. Sem isso o conteúdo
+  // pintaria visível e sumiria quando a animação de entrada assumisse.
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.documentElement.classList.add('js');
+  }
+</script>
 
 <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
   <symbol id="xt-mark" viewBox="0 0 64 64">
@@ -346,27 +445,51 @@
   <div class="wrap">
     <h1>Construímos produtos digitais que as pessoas usam <em>todo dia</em>.</h1>
     <p class="lead">A XTHUB é uma empresa brasileira de tecnologia. Criamos produtos digitais, plataformas, aplicativos e inteligência artificial. Dos nossos próprios aos que construímos para clientes.</p>
+    <div class="hero-verticais">
+      <span class="vert">Fintech</span>
+      <span class="vert">Esportes</span>
+      <span class="vert">Mercado financeiro</span>
+      <span class="vert">Música</span>
+    </div>
+    <p class="hero-nota"><b>4 produtos próprios</b> em 4 mercados, construídos dentro de casa.</p>
   </div>
 </header>
 
+<!-- Faixa de capacidades: no lugar da parede de logos de cliente, o que a casa
+     sabe fazer. Nada aqui é marca emprestada. -->
+<div class="faixa" aria-label="O que construímos">
+  <div class="faixa-in">
+    <span class="cap">Aplicativos iOS e Android</span>
+    <span class="cap">Modelos de machine learning em produção</span>
+    <span class="cap">Pagamentos e Pix</span>
+    <span class="cap">Dados em tempo real</span>
+    <span class="cap">Plataformas web e painéis</span>
+    <span class="cap">Carteiras e ativos digitais</span>
+    <span class="cap">APIs e integrações</span>
+    <span class="cap">Infraestrutura e deploy contínuo</span>
+    <span class="cap">Design de produto</span>
+    <span class="cap">Automação com IA</span>
+  </div>
+</div>
+
 <section class="band" id="fazemos">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head rv">
       <h2>Um hub de produtos de tecnologia.</h2>
       <p>Do primeiro traço ao suporte em produção. Construímos para a XTHUB e para quem precisa tirar um produto do papel.</p>
     </div>
     <div class="areas">
-      <div class="area">
+      <div class="area rv">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18" cy="17" r="2.4"/></svg></span>
         <h3>Produtos e plataformas</h3>
         <p>Da ideia ao ar: plataformas web, painéis e sistemas sob medida, prontos para escalar.</p>
       </div>
-      <div class="area">
+      <div class="area rv">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="2" width="11" height="20" rx="2.6"/><path d="M10.5 18.5h3"/></svg></span>
         <h3>Aplicativos</h3>
         <p>Apps para iOS e Android, do desenho à publicação nas lojas, com manutenção depois no ar.</p>
       </div>
-      <div class="area">
+      <div class="area rv">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></span>
         <h3>Inteligência artificial</h3>
         <p>Modelos treinados em dados do mundo real, integrados ao produto. IA que vira decisão, não slide.</p>
@@ -378,7 +501,7 @@
 <section class="band" id="produtos">
   <div class="wrap">
     <div class="prod-head">
-      <div class="sec-head">
+      <div class="sec-head rv">
         <h2>Nossos produtos.</h2>
         <p>Produtos próprios, desenvolvidos e operados pela XTHUB.</p>
       </div>
@@ -518,32 +641,71 @@
   </div>
 </section>
 
+<section class="band" id="ecossistema">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>Onde a gente já opera.</h2>
+      <p>Não mostramos logo de cliente. Mostramos produto nosso no ar, em quatro mercados que exigem coisas bem diferentes um do outro.</p>
+    </div>
+    <div class="eco">
+      <div class="eco-item rv">
+        <span class="eco-n">01 / Fintech</span>
+        <h3>Pagamentos e cripto</h3>
+        <p>Wallet, conversão de moeda e liquidação no Pix. O terreno mais duro que existe: dinheiro de verdade, em tempo real, sem margem para erro.</p>
+        <span class="eco-status vivo">No ar</span>
+      </div>
+      <div class="eco-item rv">
+        <span class="eco-n">02 / Esportes</span>
+        <h3>Dados e IA aplicada</h3>
+        <p>Modelos treinados em mais de um milhão de partidas, servindo probabilidade em tempo real dentro do app. IA que responde em segundos, não em relatório.</p>
+        <span class="eco-status vivo">No ar</span>
+      </div>
+      <div class="eco-item rv">
+        <span class="eco-n">03 / Mercado financeiro</span>
+        <h3>Trading automatizado</h3>
+        <p>Motor de decisão com gestão de risco no centro, rodando sozinho e sem parar. Backtest antes, dinheiro depois.</p>
+        <span class="eco-status">Em desenvolvimento</span>
+      </div>
+      <div class="eco-item rv">
+        <span class="eco-n">04 / Música</span>
+        <h3>Criação e distribuição</h3>
+        <p>Plataforma de IA para artistas ganharem alcance. Conteúdo, audiência e métrica no mesmo lugar.</p>
+        <span class="eco-status">Em desenvolvimento</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="band" id="metodo">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head rv">
       <h2>Como a gente constrói.</h2>
       <p>O mesmo processo que usamos nos nossos produtos, aplicado ao seu.</p>
     </div>
     <ol class="metodo">
-      <li class="passo">
+      <li class="passo rv">
         <span class="passo-n">01</span>
         <h3>Imersão</h3>
         <p>Antes da primeira linha de código, entendemos o problema, o mercado e o que está em jogo. Daqui saem o escopo, os riscos e a meta.</p>
+        <div class="passo-entrega">O que você recebe<b>Escopo fechado, riscos mapeados e proposta</b></div>
       </li>
-      <li class="passo">
+      <li class="passo rv">
         <span class="passo-n">02</span>
         <h3>Construção</h3>
         <p>Design e engenharia no mesmo time, em ciclos curtos. Você vê o produto de pé cedo, não só no fim.</p>
+        <div class="passo-entrega">O que você recebe<b>Versões navegáveis a cada ciclo</b></div>
       </li>
-      <li class="passo">
+      <li class="passo rv">
         <span class="passo-n">03</span>
         <h3>Lançamento</h3>
         <p>Publicação nas lojas ou na web, com a infraestrutura pronta para aguentar o crescimento.</p>
+        <div class="passo-entrega">O que você recebe<b>Produto publicado e infra monitorada</b></div>
       </li>
-      <li class="passo">
+      <li class="passo rv">
         <span class="passo-n">04</span>
         <h3>Evolução</h3>
         <p>Produto no ar é começo, não fim. Acompanhamos o uso real e seguimos melhorando com base em dado, não em achismo.</p>
+        <div class="passo-entrega">O que você recebe<b>Acompanhamento e evolução contínua</b></div>
       </li>
     </ol>
   </div>
@@ -552,14 +714,14 @@
 <section class="band" id="sobre">
   <div class="wrap">
     <div class="about-grid">
-      <div>
+      <div class="rv">
         <span class="eyebrow">Sobre a XTHUB</span>
         <p class="big">Somos uma empresa de tecnologia focada em construir produtos que resolvem problemas reais. <span>Unimos engenharia, design e dados para lançar produtos que as pessoas usam de verdade, os nossos e os de quem confia a operação à XTHUB.</span></p>
       </div>
       <div class="stats">
-        <div class="stat"><span class="n">4</span><span class="l">produtos próprios no portfólio</span></div>
-        <div class="stat"><span class="n">100%</span><span class="l">construídos internamente</span></div>
-        <div class="stat"><span class="n">BR</span><span class="l">empresa registrada no Brasil</span></div>
+        <div class="stat rv"><span class="n">4</span><span class="l">produtos próprios no portfólio</span></div>
+        <div class="stat rv"><span class="n">100%</span><span class="l">construídos internamente</span></div>
+        <div class="stat rv"><span class="n">BR</span><span class="l">empresa registrada no Brasil</span></div>
       </div>
     </div>
   </div>
@@ -831,6 +993,92 @@
     function boot(){ size(); init(); if(reduce){ draw(); } else { cancelAnimationFrame(raf); step(); } }
     window.addEventListener('resize', function(){ size(); init(); if(reduce) draw(); });
     boot();
+  })();
+
+  // Entrada por scroll. A classe .js só é ligada aqui: se o JS não rodar, o
+  // conteúdo nunca fica invisível.
+  (function(){
+    var reduz = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var alvos = document.querySelectorAll('.rv');
+    if(!alvos.length) return;
+    if(reduz || !('IntersectionObserver' in window)){
+      Array.prototype.forEach.call(alvos, function(el){ el.classList.add('on'); });
+      return;
+    }
+    // atraso em cascata entre irmãos, para o bloco entrar em onda e não em bloco
+    var obs = new IntersectionObserver(function(itens){
+      itens.forEach(function(it){
+        if(!it.isIntersecting) return;
+        var el = it.target;
+        var irmaos = el.parentNode ? Array.prototype.filter.call(el.parentNode.children, function(c){
+          return c.classList && c.classList.contains('rv');
+        }) : [];
+        var i = irmaos.indexOf(el);
+        el.style.transitionDelay = (i > 0 ? Math.min(i, 5) * 80 : 0) + 'ms';
+        el.classList.add('on');
+        obs.unobserve(el);
+      });
+    }, {rootMargin:'0px 0px -8% 0px', threshold:.12});
+    Array.prototype.forEach.call(alvos, function(el){ obs.observe(el); });
+  })();
+
+  // Faixa de capacidades: clona até cobrir a tela e ajusta a distância do laço,
+  // pela mesma lógica do carrossel de produtos (velocidade constante em qualquer tela).
+  (function(){
+    var trilho = document.querySelector('.faixa-in');
+    if(!trilho) return;
+    var base = Array.prototype.slice.call(trilho.children);
+    var VEL = 55;   // px por segundo
+    function medir(){
+      return base.reduce(function(t, el){ return t + el.offsetWidth; }, 0);
+    }
+    function montar(){
+      while(trilho.children.length > base.length) trilho.removeChild(trilho.lastChild);
+      var serie = medir();
+      if(!serie) return;
+      var alvo = window.innerWidth + serie;
+      var copias = Math.max(1, Math.ceil(alvo / serie));
+      for(var i=0; i<copias; i++){
+        base.forEach(function(el){
+          var c = el.cloneNode(true);
+          c.setAttribute('aria-hidden','true');
+          trilho.appendChild(c);
+        });
+      }
+      trilho.style.setProperty('--faixa-w', serie + 'px');
+      trilho.style.setProperty('--faixa-t', (serie / VEL) + 's');
+    }
+    montar();
+    window.addEventListener('load', montar);
+    var t; window.addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(montar, 180); });
+  })();
+
+  // Números do "sobre" contam até o valor quando aparecem. Só conta o que é
+  // número: rótulos como "BR" ficam intactos.
+  (function(){
+    var reduz = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var nums = document.querySelectorAll('.stat .n');
+    if(!nums.length || reduz || !('IntersectionObserver' in window)) return;
+    var obs = new IntersectionObserver(function(itens){
+      itens.forEach(function(it){
+        if(!it.isIntersecting) return;
+        var el = it.target, bruto = el.textContent.trim();
+        var m = bruto.match(/^(\d+)(.*)$/);
+        obs.unobserve(el);
+        if(!m) return;
+        var fim = parseInt(m[1], 10), sufixo = m[2], dur = 900, ini = null;
+        function passo(ts){
+          if(ini === null) ini = ts;
+          var p = Math.min((ts - ini) / dur, 1);
+          var suave = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(fim * suave) + sufixo;
+          if(p < 1) requestAnimationFrame(passo);
+        }
+        el.textContent = '0' + sufixo;
+        requestAnimationFrame(passo);
+      });
+    }, {threshold:.5});
+    Array.prototype.forEach.call(nums, function(el){ obs.observe(el); });
   })();
 </script>
 
