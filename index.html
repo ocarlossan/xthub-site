@@ -36,7 +36,7 @@
     --mint:#3DC79E; --sharp:#2FBE86; --sharp-deep:#0E6E4E;
     /* Azul de assinatura da XTHUB: a casa tem cor própria, distinta das cores
        dos produtos (menta, verde, dourado, lima). Usado com parcimônia. */
-    --xt:#5B8AFF; --xt-soft:rgba(91,138,255,.13); --xt-line:rgba(91,138,255,.34);
+    --xt:#4A5CF5; --xt-soft:rgba(74,92,245,.15); --xt-line:rgba(74,92,245,.38);
     --sans:"Urbanist",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,Roboto,Helvetica,Arial,sans-serif;
     --display:"Urbanist",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
     --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
@@ -107,7 +107,7 @@
   }
   .mancha.a{
     width:min(760px,95vw); height:min(760px,95vw); left:-14%; top:-32%;
-    background:radial-gradient(circle, rgba(91,138,255,.46), transparent 68%);
+    background:radial-gradient(circle, rgba(74,92,245,.48), transparent 68%);
     animation:deriva-a 34s ease-in-out infinite alternate;
   }
   .mancha.b{
@@ -360,7 +360,7 @@
     position:absolute; left:50%; bottom:-58%; transform:translateX(-50%);
     width:min(1100px,120vw); height:min(460px,60vh); border-radius:50%;
     filter:blur(90px); pointer-events:none;
-    background:radial-gradient(circle, rgba(91,138,255,.22), transparent 68%);
+    background:radial-gradient(circle, rgba(74,92,245,.24), transparent 68%);
     animation:respira 13s ease-in-out infinite alternate;
   }
   @keyframes respira{
@@ -1057,7 +1057,7 @@
     function py(l){ return (h - (rows - 1) * ESP) / 2 + l * ESP; }
 
     function malha(){
-      ctx.fillStyle = 'rgba(158,186,255,.085)';
+      ctx.fillStyle = 'rgba(148,159,249,.085)';
       for(var l = 0; l < rows; l++){
         for(var c = 0; c < cols; c++){ ctx.fillRect(px(c) - .8, py(l) - .8, 1.6, 1.6); }
       }
@@ -1082,7 +1082,7 @@
         var ate = Math.floor(o.prog), fr = o.prog - ate;
         ctx.lineWidth = 1.4;
         ctx.lineCap = 'square';
-        ctx.strokeStyle = 'rgba(91,138,255,' + (o.alfa * 0.42).toFixed(3) + ')';
+        ctx.strokeStyle = 'rgba(74,92,245,' + (o.alfa * 0.42).toFixed(3) + ')';
         ctx.beginPath();
         ctx.moveTo(px(o.pts[0][0]), py(o.pts[0][1]));
         for(var k = 1; k <= ate; k++) ctx.lineTo(px(o.pts[k][0]), py(o.pts[k][1]));
@@ -1096,12 +1096,12 @@
         ctx.stroke();
 
         // nós já fixados no caminho
-        ctx.fillStyle = 'rgba(122,160,255,' + (o.alfa * 0.55).toFixed(3) + ')';
+        ctx.fillStyle = 'rgba(108,123,247,' + (o.alfa * 0.55).toFixed(3) + ')';
         for(var j = 0; j <= ate; j++) ctx.fillRect(px(o.pts[j][0]) - 2, py(o.pts[j][1]) - 2, 4, 4);
 
         // ponta que está construindo
         if(o.fase === 'sobe'){
-          ctx.fillStyle = 'rgba(190,212,255,' + (o.alfa * 0.9).toFixed(3) + ')';
+          ctx.fillStyle = 'rgba(184,191,251,' + (o.alfa * 0.9).toFixed(3) + ')';
           ctx.fillRect(hx - 2.6, hy - 2.6, 5.2, 5.2);
         }
       }
