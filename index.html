@@ -27,11 +27,6 @@
     src:url("/fonts/urbanist-latin-ext.woff2") format("woff2");
     unicode-range:U+0100-024F,U+0259,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;
   }
-  @font-face{
-    font-family:"Urbanist"; font-style:italic; font-weight:100 900; font-display:swap;
-    src:url("/fonts/urbanist-latin-italic.woff2") format("woff2");
-    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
-  }
 
   :root{
     --ink:#08090C; --ink-2:#0C0D11; --surface:#131418; --surface-2:#191B20;
@@ -59,16 +54,17 @@
   @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto;} *{animation:none!important;transition:none!important;} }
   a{color:inherit; text-decoration:none;}
 
-  /* Tipografia de display. A serifada carrega os titulos e as declaracoes;
-     a sans cuida de interface, produto e texto corrido. O italico e a enfase.
-     SOFT arredonda os terminais e WONK liga as alternativas de caractere:
-     e o que tira a cara de fonte padrao. */
+  /* Tipografia. Uma familia so no site inteiro: titulo, texto pequeno e numero.
+     O contraste vem do peso, nao de trocar de fonte: o display vai no 900 com
+     o espacamento bem fechado, o corpo fica no 400. */
   h1, h2, .big, .stat .n{
     font-family:var(--display);
-    font-weight:700;
-    letter-spacing:-.028em;
+    font-weight:900;
+    letter-spacing:-.038em;
   }
-  h1 em, h2 em, .big em{font-style:italic;}
+  /* A ênfase é cor, não itálico: destaca a palavra que carrega o sentido
+     sem quebrar o bloco pesado do título. */
+  h1 em, h2 em, .big em{font-style:normal; color:var(--xt);}
   .wrap{max-width:var(--wrap); margin:0 auto; padding:0 var(--gutter);}
   .eyebrow{
     font-size:12.5px; letter-spacing:.055em; text-transform:uppercase; font-weight:600;
@@ -143,10 +139,10 @@
   }
   .hero-conteudo{position:relative; z-index:2; text-align:center; padding-top:clamp(58px,8.5vh,96px);}
   .hero h1{
-    font-size:clamp(36px,6vw,64px); line-height:1.1; letter-spacing:-.034em; font-weight:700;
+    font-size:clamp(36px,6vw,66px); line-height:1.06; letter-spacing:-.042em; font-weight:900;
     margin:0 auto; max-width:26ch; text-wrap:balance;
   }
-  .hero h1 em{color:var(--text);}
+  .hero h1 em{color:var(--xt);}
   .lead{font-size:clamp(16px,2vw,19px); color:var(--muted); max-width:72ch; margin:24px auto 0; text-wrap:pretty;}
   .trust{
     display:flex; flex-wrap:wrap; gap:10px 26px; margin-top:52px; padding-top:26px;
@@ -179,7 +175,7 @@
   }
   .sec-head{margin-inline:auto; text-align:center;}
   /* medida própria: o título cabe numa linha; o parágrafo mantém a medida de leitura */
-  .sec-head h2{font-size:clamp(28px,3.7vw,40px); letter-spacing:-.026em; font-weight:700; margin:0 auto; max-width:36ch; text-wrap:balance;}
+  .sec-head h2{font-size:clamp(28px,3.7vw,41px); letter-spacing:-.034em; font-weight:900; margin:0 auto; max-width:36ch; text-wrap:balance;}
   .sec-head p{color:var(--muted); margin:14px auto 0; font-size:16.5px; max-width:60ch; text-wrap:pretty;}
 
   /* ---------- áreas ---------- */
@@ -198,8 +194,8 @@
   .passo:last-child::before{display:none;}
   .passo-n{
     position:absolute; top:-8px; left:0; font-family:var(--display); font-size:30px;
-    font-weight:700; line-height:1; color:var(--xt); opacity:.85;
-    font-variant-numeric:lining-nums; letter-spacing:-.03em;
+    font-weight:900; line-height:1; color:var(--xt); opacity:.85;
+    font-variant-numeric:lining-nums; letter-spacing:-.04em;
     animation:noAcende 7.2s ease-in-out infinite;
   }
 
@@ -305,7 +301,7 @@
   .about-grid p.big span{color:var(--muted);}
   .stats{display:flex; flex-direction:column; gap:2px; border:1px solid var(--line); border-radius:18px; overflow:hidden;}
   .stat{padding:22px 24px; background:var(--surface); display:flex; align-items:baseline; gap:14px;}
-  .stat .n{font-size:36px; font-weight:700; letter-spacing:-.03em; font-variant-numeric:lining-nums tabular-nums; font-feature-settings:'lnum' 1,'tnum' 1; color:var(--accent-2);}
+  .stat .n{font-size:38px; font-weight:900; letter-spacing:-.038em; font-variant-numeric:lining-nums tabular-nums; font-feature-settings:'lnum' 1,'tnum' 1; color:var(--accent-2);}
   .stat .l{color:var(--muted); font-size:14.5px;}
 
   /* ---------- contato ---------- */
@@ -338,7 +334,7 @@
   .form-alt{font-size:13px; color:var(--muted);}
   .form-alt a{color:var(--xt); border-bottom:1px solid var(--xt-line);}
   .form-nota{font-size:12px; color:var(--dim); margin-top:14px;}
-  .cta-band h2{font-size:clamp(30px,4.4vw,46px); letter-spacing:-.03em; font-weight:700; margin:0 auto; max-width:32ch; text-wrap:balance;}
+  .cta-band h2{font-size:clamp(30px,4.4vw,47px); letter-spacing:-.038em; font-weight:900; margin:0 auto; max-width:32ch; text-wrap:balance;}
   .cta-band p{color:var(--muted); max-width:52ch; margin:16px auto 0; font-size:16.5px;}
 
   /* ---------- footer ---------- */
@@ -390,7 +386,7 @@
   }
   .faixa-titulo{
     text-align:center; margin:0 auto 40px; padding:0 var(--gutter);
-    font-size:clamp(21px,2.5vw,27px); font-weight:650; letter-spacing:-.022em;
+    font-size:clamp(21px,2.5vw,27px); font-weight:800; letter-spacing:-.03em;
     color:var(--accent-2);
   }
   /* A faixa nao sangra: ocupa 80% da tela e fica centrada, como no Cubos. */
