@@ -312,10 +312,26 @@
   .about-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:center; margin-top:20px;}
   .about-grid p.big{font-size:clamp(19px,2.4vw,23px); line-height:1.5; color:var(--text); letter-spacing:-.01em; margin:20px 0 0;}
   .about-grid p.big span{color:var(--muted);}
-  .stats{display:flex; flex-direction:column; gap:2px; border:1px solid var(--line); border-radius:18px; overflow:hidden;}
-  .stat{padding:22px 24px; background:var(--surface); display:flex; align-items:baseline; gap:14px;}
+  .stats{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px; margin-top:52px;
+    background:var(--line); border:1px solid var(--line); border-radius:18px; overflow:hidden;
+  }
+  .stat{padding:26px 26px; background:var(--ink-2); display:flex; align-items:baseline; gap:14px;}
   .stat .n{font-size:38px; font-weight:900; letter-spacing:-.038em; font-variant-numeric:lining-nums tabular-nums; font-feature-settings:'lnum' 1,'tnum' 1; color:var(--accent-2);}
   .stat .l{color:var(--muted); font-size:14.5px;}
+
+  /* ---------- foto do time ---------- */
+  .foto-time{
+    margin:0; border-radius:20px; overflow:hidden; border:1px solid var(--line);
+    background:var(--ink-2); line-height:0;
+  }
+  .foto-time img{
+    width:100%; height:100%; display:block; object-fit:cover;
+    aspect-ratio:4 / 3;
+    /* tratamento leve para a foto conviver com o resto do site, que e escuro
+       e monocromatico: tira o excesso de cor sem virar preto e branco */
+    filter:saturate(.55) contrast(1.06) brightness(.92);
+  }
 
   /* ---------- contato ---------- */
   .cta-band{text-align:center; padding:104px 0;}
@@ -473,6 +489,8 @@
     .prod-arrows{display:none;}
     .prod-head{flex-direction:column; align-items:center; gap:4px;}
     .about-grid{grid-template-columns:1fr; gap:34px;}
+    .stats{grid-template-columns:1fr; margin-top:34px;}
+    .foto-time img{aspect-ratio:16 / 10;}
     .foot-grid{grid-template-columns:1fr; gap:32px;}
     .band{padding:74px 0;}
     .hero{padding:0 0 78px; min-height:min(84vh, 760px);}
@@ -502,7 +520,7 @@
     .form-alt{text-align:center;}
     .product{flex:0 0 86vw; padding:24px 22px; min-height:0;}
     .area{padding:22px 20px;}
-    .stat{padding:18px 20px;}
+    .stat{padding:20px 22px;}
     .stat .n{font-size:26px;}
     .nav-in{height:62px; gap:12px;}
     .btn{padding:10px 16px; font-size:14px;}
@@ -662,6 +680,11 @@
         <p>Modelos treinados em dados do mundo real, integrados ao produto. IA que vira decisão, não slide.</p>
       </div>
     </div>
+    <div class="stats">
+      <div class="stat rv"><span class="n">6</span><span class="l">empresas construídas</span></div>
+      <div class="stat rv"><span class="n">6</span><span class="l">anos de mercado</span></div>
+      <div class="stat rv"><span class="n">BR</span><span class="l">empresa registrada no Brasil</span></div>
+    </div>
   </div>
 </section>
 
@@ -789,11 +812,13 @@
         <span class="eyebrow">Sobre a XTHUB</span>
         <p class="big">São mais de <em>6 anos</em> construindo tecnologia que resolve problema real. <span>Unimos engenharia, design e dados para lançar produtos que as pessoas usam de verdade, os nossos e os de quem confia a operação à XTHUB. Seis empresas já saíram das nossas mãos, de fintech a inteligência artificial.</span></p>
       </div>
-      <div class="stats">
-        <div class="stat rv"><span class="n">6</span><span class="l">empresas construídas</span></div>
-        <div class="stat rv"><span class="n">6</span><span class="l">anos de mercado</span></div>
-        <div class="stat rv"><span class="n">BR</span><span class="l">empresa registrada no Brasil</span></div>
-      </div>
+      <!-- Se o arquivo da foto ainda nao existe, o onerror some com o bloco
+           inteiro: melhor a secao sem foto do que com icone de imagem quebrada. -->
+      <figure class="foto-time rv">
+        <img src="/fotos/time.jpg" alt="Time da XTHUB no escritório"
+             decoding="async"
+             onerror="this.closest('.foto-time').remove()">
+      </figure>
     </div>
   </div>
 </section>
