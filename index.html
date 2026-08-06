@@ -309,16 +309,16 @@
   .p-link:hover{gap:13px;}
 
   /* ---------- sobre / stats ---------- */
-  .about-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:center; margin-top:20px;}
+  .about-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:start; margin-top:20px;}
   .about-grid p.big{font-size:clamp(19px,2.4vw,23px); line-height:1.5; color:var(--text); letter-spacing:-.01em; margin:20px 0 0;}
   .about-grid p.big span{color:var(--muted);}
   .stats{
-    display:grid; grid-template-columns:repeat(3,1fr); gap:1px; margin-top:52px;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px; margin-top:40px;
     background:var(--line); border:1px solid var(--line); border-radius:18px; overflow:hidden;
   }
-  .stat{padding:26px 26px; background:var(--ink-2); display:flex; align-items:baseline; gap:14px;}
-  .stat .n{font-size:38px; font-weight:900; letter-spacing:-.038em; font-variant-numeric:lining-nums tabular-nums; font-feature-settings:'lnum' 1,'tnum' 1; color:var(--accent-2);}
-  .stat .l{color:var(--muted); font-size:14.5px;}
+  .stat{padding:20px 18px; background:var(--ink-2); display:flex; flex-direction:column; gap:6px;}
+  .stat .n{font-size:32px; font-weight:900; line-height:1; letter-spacing:-.038em; font-variant-numeric:lining-nums tabular-nums; font-feature-settings:'lnum' 1,'tnum' 1; color:var(--accent-2);}
+  .stat .l{color:var(--muted); font-size:13.5px; line-height:1.35;}
 
   /* ---------- foto do time ---------- */
   .foto-time{
@@ -680,11 +680,6 @@
         <p>Modelos treinados em dados do mundo real, integrados ao produto. IA que vira decisão, não slide.</p>
       </div>
     </div>
-    <div class="stats">
-      <div class="stat rv"><span class="n">6</span><span class="l">empresas construídas</span></div>
-      <div class="stat rv"><span class="n">6</span><span class="l">anos de mercado</span></div>
-      <div class="stat rv"><span class="n">BR</span><span class="l">empresa registrada no Brasil</span></div>
-    </div>
   </div>
 </section>
 
@@ -810,7 +805,12 @@
     <div class="about-grid">
       <div class="rv">
         <span class="eyebrow">Sobre a XTHUB</span>
-        <p class="big">São mais de <em>6 anos</em> construindo tecnologia que resolve problema real. <span>Unimos engenharia, design e dados para lançar produtos que as pessoas usam de verdade, os nossos e os de quem confia a operação à XTHUB. Seis empresas já saíram das nossas mãos, de fintech a inteligência artificial.</span></p>
+        <p class="big">São mais de <em>6 anos</em> construindo tecnologia que resolve problema real. <span>Unimos engenharia, design e dados para lançar produtos que as pessoas usam de verdade, os nossos e os de quem confia a operação à XTHUB. Mais de quarenta empresas já saíram das nossas mãos, de fintech a inteligência artificial.</span></p>
+        <div class="stats">
+          <div class="stat rv"><span class="n">40+</span><span class="l">empresas construídas</span></div>
+          <div class="stat rv"><span class="n">6</span><span class="l">anos de mercado</span></div>
+          <div class="stat rv"><span class="n">BR</span><span class="l">empresa registrada no Brasil</span></div>
+        </div>
       </div>
       <!-- Se o arquivo da foto ainda nao existe, o onerror some com o bloco
            inteiro: melhor a secao sem foto do que com icone de imagem quebrada. -->
