@@ -332,8 +332,7 @@
     background:var(--ink-2); line-height:0;
   }
   .foto-time img{
-    width:100%; height:100%; display:block; object-fit:cover;
-    aspect-ratio:5 / 4;
+    width:100%; height:auto; display:block;
     /* tratamento leve para a foto conviver com o resto do site, que e escuro
        e monocromatico: tira o excesso de cor sem virar preto e branco */
     filter:saturate(.55) contrast(1.06) brightness(.92);
@@ -496,7 +495,6 @@
     .prod-head{flex-direction:column; align-items:center; gap:4px;}
     .about-grid{grid-template-columns:1fr; gap:34px;}
     .stats{grid-template-columns:1fr; margin-top:34px;}
-    .foto-time img{aspect-ratio:5 / 4;}
     .foot-grid{grid-template-columns:1fr; gap:32px;}
     .band{padding:74px 0;}
     .hero{padding:0 0 78px; min-height:min(84vh, 760px);}
@@ -828,8 +826,10 @@
       <!-- Se o arquivo da foto ainda nao existe, o onerror some com o bloco
            inteiro: melhor a secao sem foto do que com icone de imagem quebrada. -->
       <figure class="foto-time rv">
-        <img src="/fotos/time.jpg" alt="Equipe da XTHUB reunida no escritório"
-             decoding="async"
+        <img src="/fotos/time-1200.jpg" alt="Equipe da XTHUB reunida no escritório"
+             srcset="/fotos/time-800.jpg 800w, /fotos/time-1200.jpg 1200w, /fotos/time.jpg 1600w"
+             sizes="(max-width: 860px) 92vw, 42vw"
+             width="1600" height="1280" decoding="async"
              onerror="this.closest('.foto-time').remove()">
       </figure>
     </div>
