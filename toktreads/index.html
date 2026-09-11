@@ -26,18 +26,19 @@
 }
 *{box-sizing:border-box;margin:0}
 body{background:var(--green);color:var(--green);font-family:var(--sans);
-  -webkit-font-smoothing:antialiased;overflow:hidden;height:100vh}
+  -webkit-font-smoothing:antialiased;overflow:hidden;height:100vh;height:100dvh}
 
 /* ----------------------------------------------------------------- palco */
-#palco{position:relative;height:100vh;width:100%;overflow:hidden}
+#palco{position:relative;height:100vh;height:100dvh;width:100%;overflow:hidden}
 .slide{position:absolute;inset:0;padding:clamp(46px,7vh,78px) clamp(24px,6vw,92px) clamp(74px,10vh,96px);
-  display:flex;flex-direction:column;justify-content:center;background:var(--cream);
+  display:flex;flex-direction:column;justify-content:flex-start;background:var(--cream);
   opacity:0;transform:translateX(34px);pointer-events:none;
   transition:opacity .6s ease,transform .6s cubic-bezier(.25,1,.5,1);overflow-y:auto}
 .slide.ativo{opacity:1;transform:none;pointer-events:auto;z-index:2}
 .slide.saiu{transform:translateX(-34px)}
-.slide.centro{align-items:center;text-align:center;justify-content:center}
-.env{width:100%;max-width:1120px;margin:0 auto}
+.slide.centro{align-items:center;text-align:center}
+.env{width:100%;max-width:1120px;margin:auto}
+.marca{height:74px;width:auto;max-width:min(100%,340px);display:block;margin:0 auto 38px;object-fit:contain}
 
 .mintbg{background:var(--mint2)} .creamsand{background:var(--sand)}
 .greenbg{background:var(--green);color:var(--cream)}
@@ -131,9 +132,9 @@ h2.wide{max-width:26ch}
   gap:16px;padding:12px clamp(18px,4vw,44px);background:rgba(255,253,248,.92);
   backdrop-filter:blur(10px);border-top:1px solid var(--linha)}
 #pontos{display:flex;gap:7px;margin:0 auto}
-#pontos b{width:7px;height:7px;border-radius:50%;background:rgba(18,55,42,.2);border:none;
+#pontos button{flex:none;width:7px;height:7px;border-radius:50%;background:rgba(18,55,42,.2);border:none;
   padding:0;cursor:pointer;transition:background .25s,transform .25s}
-#pontos b.on{background:var(--crimson);transform:scale(1.45)}
+#pontos button.on{background:var(--crimson);transform:scale(1.45)}
 .setas{display:flex;gap:8px}
 .setas button{width:36px;height:36px;border-radius:10px;border:1px solid var(--linha2);
   background:var(--cream);color:var(--green);font-size:16px;line-height:1;cursor:pointer;
@@ -144,6 +145,44 @@ h2.wide{max-width:26ch}
   font-variant-numeric:tabular-nums;min-width:62px;text-align:right}
 
 :focus-visible{outline:2px solid var(--crimson);outline-offset:2px}
+
+
+.so-celular{display:none}
+
+/* ============================================================== celular */
+@media (max-width:600px){
+  .slide{padding:30px 20px 86px}
+  .env{padding-top:4px}
+  h2{max-width:none} h2.wide{max-width:none}
+  .sub{font-size:15px;margin-top:12px}
+  .eb{margin-bottom:12px;font-size:10.5px}
+  .marca{height:54px;margin-bottom:26px} .marca.fecho{margin-bottom:22px}
+  .stamp{font-size:10.5px;letter-spacing:.12em}
+  .slide.centro .sub{margin-top:18px}
+
+  /* caixas so de numero cabem duas por linha; caixa de texto fica uma por linha */
+  .col{gap:10px;margin-top:14px}
+  .c3:not(:has(.box.txt)),.c4:not(:has(.box.txt)){grid-template-columns:repeat(2,1fr)}
+  .box{padding:15px 14px;border-radius:12px}
+  .box .num{font-size:9.5px;margin-bottom:7px}
+  .box h3{font-size:20px}
+  .box p{font-size:12.5px;margin-top:7px}
+  .box.txt h3{font-size:16px}
+  .lista{gap:9px} .lista .x{padding:13px 14px;gap:11px} .lista span,.lista i{font-size:14px}
+
+  /* graficos: versao estreita entra, versao de mesa sai */
+  .so-mesa{display:none} .so-celular{display:block}
+  .graf{margin:4px 0 8px}
+  .graf svg text[font-size="17"]{font-size:32px}
+  .graf svg text[font-size="36"]{font-size:60px}
+  .graf .traco{stroke-width:7} .graf .pontaC{r:15}
+
+  /* rodape: bolinhas mais juntas para as treze caberem */
+  #rodape{padding:10px 16px;gap:12px}
+  #pontos{gap:5px} #pontos button{width:6px;height:6px}
+  .setas button{width:34px;height:34px}
+  #conta{font-size:11.5px;min-width:52px}
+}
 
 @media (prefers-reduced-motion:reduce){
   *{transition-duration:.01ms!important}
@@ -222,6 +261,28 @@ const ONDA = (function () {
   return g;
 })();
 
+/* A mesma onda para tela estreita: faixa mais alta e letra maior em unidades
+   do SVG, porque o desenho inteiro encolhe para caber em 330px. */
+const ONDA_MOB = (function () {
+  const m = [["Estados Unidos", "onde a onda começa", 0, C],
+             ["Reino Unido", "validação europeia", 120, "#38554A"],
+             ["Brasil", "onde você vende", 300, G]];
+  let g = '<svg viewBox="0 0 1000 470" role="img" aria-label="Defasagem entre os três mercados">';
+  m.forEach((r, k) => {
+    const y = 20 + k * 152, atraso = (k * 0.22).toFixed(2) + "s";
+    g += '<rect x="0" y="' + y + '" width="1000" height="84" rx="16" fill="rgba(18,55,42,.07)"></rect>';
+    g += '<rect class="faixa" style="--d:' + atraso + ';transform-origin:' + r[2] + 'px center" x="' + r[2] +
+         '" y="' + y + '" width="' + (1000 - r[2] - 10) + '" height="84" rx="16" fill="' + r[3] +
+         '" opacity="' + (k === 2 ? 1 : .28) + '"></rect>';
+    g += '<text class="rotFaixa" style="--d:' + ((k * 0.22) + 0.5).toFixed(2) + 's" x="' + (r[2] + 28) +
+         '" y="' + (y + 56) + '" fill="' + (k === 2 ? "#FFFDF8" : G) + '" font-size="38" font-weight="700" font-family="' + SANS + '">' + r[0] + '</text>';
+    g += '<text class="rotFaixa" style="--d:' + ((k * 0.22) + 0.6).toFixed(2) + 's" x="' + (r[2] + 28) +
+         '" y="' + (y + 128) + '" fill="rgba(18,55,42,.6)" font-size="28" font-family="' + MONO + '">' + r[1] + '</text>';
+  });
+  g += "</svg>";
+  return g;
+})();
+
 /* Projeção: a coluna cresce do chão e o valor conta junto. */
 const BARRAS = (function () {
   const d = [["Ano 1", 6.9, "8.560 assinantes*"],
@@ -249,7 +310,32 @@ const BARRAS = (function () {
   return g;
 })();
 
-const MARCA = '<img src="' + LOCKUP + '" alt="TokThreads" style="height:74px;width:auto;display:block;margin:0 auto 38px">';
+/* A projeção deitada, para o celular: três colunas lado a lado não cabem com
+   número legível em 330px, então cada ano vira uma linha com a barra crescendo
+   da esquerda e o valor contando na ponta. */
+const BARRAS_MOB = (function () {
+  const d = [["Ano 1", 6.9, "8.560 assinantes*"],
+             ["Ano 2", 36.1, "36.300 assinantes*"],
+             ["Ano 3", 206, "128.400 assinantes*"]];
+  let g = '<svg viewBox="0 0 1000 560" role="img" aria-label="Projeção de receita anual em três anos">';
+  d.forEach((b, k) => {
+    const y = 10 + k * 186, w = Math.max((b[1] / 206) * 1000, 24), atraso = (k * 0.2).toFixed(2) + "s";
+    g += '<text class="rotB" style="--d:' + (k * 0.2 + 0.1).toFixed(2) + 's" x="0" y="' + (y + 34) +
+         '" fill="rgba(18,55,42,.75)" font-size="36" font-weight="700" font-family="' + SANS + '">' + b[0] + '</text>';
+    g += '<text class="rotB" style="--d:' + (k * 0.2 + 0.5).toFixed(2) + 's" x="1000" y="' + (y + 34) +
+         '" fill="' + G + '" font-size="46" font-weight="700" font-family="' + SANS + '" text-anchor="end" data-alvo="' + b[1] +
+         '" data-pre="R$ " data-suf=" mi' + (k === 2 ? "*" : "") + '" data-dec="' + (b[1] % 1 === 0 ? "0" : "1") + '">R$ 0 mi</text>';
+    g += '<rect x="0" y="' + (y + 58) + '" width="1000" height="56" rx="12" fill="rgba(18,55,42,.07)"></rect>';
+    g += '<rect class="faixa" style="--d:' + atraso + '" x="0" y="' + (y + 58) + '" width="' + w +
+         '" height="56" rx="12" fill="' + (k === 2 ? C : "rgba(217,32,79,.35)") + '"></rect>';
+    g += '<text class="rotB" style="--d:' + (k * 0.2 + 0.7).toFixed(2) + 's" x="0" y="' + (y + 152) +
+         '" fill="rgba(18,55,42,.55)" font-size="30" font-family="' + SANS + '">' + b[2] + '</text>';
+  });
+  g += "</svg>";
+  return g;
+})();
+
+const MARCA = '<img class="marca" src="' + LOCKUP + '" alt="TokThreads">';
 
 /* ----------------------------------------------------------------- slides */
 const S = [];
@@ -327,7 +413,7 @@ S.push({ menu: null, html:
   '<div class="env"><span class="eb">Três mercados</span>' +
   '<h2 class="wide">A onda que já quebrou lá fora ainda não chegou aqui.</h2>' +
   '<p class="sub" style="margin-bottom:20px">O formato que vende nos Estados Unidos costuma chegar ao Brasil alguns meses depois. Ver o mesmo produto e o mesmo gancho nos três mercados é a forma mais barata de antecipar a próxima onda.</p>' +
-  '<div class="graf">' + ONDA + '</div></div>' });
+  '<div class="graf so-mesa">' + ONDA + '</div><div class="graf so-celular">' + ONDA_MOB + '</div></div>' });
 
 /* 8 categoria provada */
 S.push({ menu: null, html:
@@ -379,7 +465,7 @@ S.push({ menu: "Preços", html:
 S.push({ menu: "Projeção", html:
   '<div class="env"><span class="eb">Projeção</span>' +
   '<h2 style="margin-bottom:4px">Três anos.</h2>' +
-  '<div class="graf">' + BARRAS + '</div>' +
+  '<div class="graf so-mesa">' + BARRAS + '</div><div class="graf so-celular">' + BARRAS_MOB + '</div>' +
   '<p class="mini">Projeção revisada em 09/09/2026: assinantes pagantes ao fim de cada ano, a um ticket médio de R$ 120, que é o preço de primeiro ano aplicado aos três anos. Reajuste depois do primeiro ano não está projetado aqui. <b>Atuação: Brasil no ano 1, Brasil e América Latina a partir do ano 2.</b> No ano 3, os 128 mil assinantes representariam 32% de uma base estimada de 400 mil sellers ativos <b>só no Brasil</b>, bem acima do teto conservador de 4% da versão anterior; com a América Latina inteira no escopo o denominador é bem maior, mas ainda não foi estimado. Não há uma explicação própria da TokThreads para uma penetração de mercado dessa ordem, e o número segue pendente de validação com o time da companhia. O número de sellers é estimativa própria, a partir do crescimento de 11 vezes divulgado pela plataforma em 2025.</p></div>',
   classe: "creamsand" });
 
@@ -397,7 +483,7 @@ S.push({ menu: "Roadmap", html:
 
 /* 13 fechamento */
 S.push({ menu: "Contato", html:
-  '<div class="env">' + MARCA.replace("margin:0 auto 38px", "margin:0 auto 32px") +
+  '<div class="env">' + MARCA.replace('class="marca"', 'class="marca fecho"') +
   '<h2 class="wide" style="font-size:clamp(26px,3.6vw,48px);text-align:center;max-width:23ch;margin:0 auto 20px;color:var(--cream)">O seller não precisa de mais um número. Precisa saber <span class="markY">o que gravar</span> amanhã.</h2>' +
   '<p class="sub" style="text-align:center;max-width:56ch;margin-inline:auto">O mercado nasceu há um ano e já move dezenas de milhões de dólares por mês. Quem chegar primeiro com a resposta pronta, e não só com a tabela, fica com o assinante.</p>' +
   '<p style="margin-top:30px"><span class="tag">Vamos conversar</span></p>' +
@@ -493,13 +579,23 @@ addEventListener("wheel", (e) => {
   ir(atual + (e.deltaY > 0 ? 1 : -1));
 }, { passive: true });
 
-let toqueY = null;
-addEventListener("touchstart", (e) => { toqueY = e.touches[0].clientY; }, { passive: true });
+let toque = null;
+addEventListener("touchstart", (e) => {
+  const alvo = slides[atual];
+  toque = { x: e.touches[0].clientX, y: e.touches[0].clientY,
+            noTopo: alvo.scrollTop <= 2,
+            noFim: alvo.scrollTop + alvo.clientHeight >= alvo.scrollHeight - 4 };
+}, { passive: true });
 addEventListener("touchend", (e) => {
-  if (toqueY === null) return;
-  const d = toqueY - e.changedTouches[0].clientY;
-  if (Math.abs(d) > 60) ir(atual + (d > 0 ? 1 : -1));
-  toqueY = null;
+  if (!toque) return;
+  const dx = toque.x - e.changedTouches[0].clientX;
+  const dy = toque.y - e.changedTouches[0].clientY;
+  if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.3) ir(atual + (dx > 0 ? 1 : -1));
+  else if (Math.abs(dy) > 70 && Math.abs(dy) > Math.abs(dx) * 1.3) {
+    if (dy > 0 && toque.noFim) ir(atual + 1);
+    if (dy < 0 && toque.noTopo) ir(atual - 1);
+  }
+  toque = null;
 }, { passive: true });
 
 ir(Math.max(0, (parseInt((location.hash || "#1").slice(1), 10) || 1) - 1));
